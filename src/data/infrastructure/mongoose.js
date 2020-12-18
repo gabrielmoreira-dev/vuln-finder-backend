@@ -27,7 +27,7 @@ process.on('SIGINT', () => {
     console.log(
       'Mongoose default connection is disconnected due to application termination'
     );
-    process.exit(0);
+    process.exit(0)
   })
 })
 
