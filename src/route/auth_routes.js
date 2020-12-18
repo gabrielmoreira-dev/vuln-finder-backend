@@ -6,4 +6,4 @@ router.post('/register', async (req, res) => {
   await AuthController.registerUser(req, res)
 })
 
-module.exports = router
+module.exports = app => app.use('/auth', router)
