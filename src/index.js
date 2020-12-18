@@ -1,9 +1,11 @@
-const express = require('express')
-const bodyParser = require('body-parser')
+const app = require('./app')
+const http = require('http')
 
-const app = express()
+const { normalizePort, onError, onListening } = require('./utils')
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+const port = normalizePort(process.env.PORT || 3001)
 
-app.listen(3000)
+const server = http.createServer(app)
+server.listen(port)
+server.on('error', onError)
+server.on('listening', _ => onListening(port))
