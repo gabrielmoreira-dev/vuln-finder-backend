@@ -1,3 +1,6 @@
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+
 const User = require('../data/model/user')
 
 module.exports = {
@@ -22,7 +25,9 @@ module.exports = {
 
       user.password = undefined
 
-      return res.send({ user })
+      return res.send({
+        token: generateToken({ id: user.id, role: user.role })
+      })
     }
     catch (e) {
       return res.status(500).send({
@@ -33,10 +38,10 @@ module.exports = {
 
   authenticateUser: async (req, res) => {
 
-    const { email, role } = req.body
+    const { email, password, role } = req.body
 
     try {
-      const user = User.findOne({ email })
+      const user = await User.findOne({ email }).select('+password')
 
       if (!user) {
         return res.status(400).send({
@@ -49,6 +54,17 @@ module.exports = {
           error: 'Invalid permission'
         })
       }
+
+      if (!await bcrypt.compare(password, user.password)) {
+        return res.status(400).send({
+          error: 'Invalid password'
+        })
+      }
+
+      return res.send({
+        token: generateToken({ id: user.id, role: user.role })
+      })
+
     }
     catch (e) {
       return res.status(500).send({
@@ -58,4 +74,10 @@ module.exports = {
 
   }
 
+}
+
+const generateToken = (params = {}) => {
+  return jwt.sign(params, process.env.JWT_HASH, {
+    expiresIn: 86400
+  })
 }

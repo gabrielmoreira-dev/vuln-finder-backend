@@ -1,6 +1,11 @@
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+
 const AuthController = require('../../src/controller/auth_controller')
 const User = require('../../src/data/model/user')
 
+jest.mock('bcryptjs')
+jest.mock('jsonwebtoken')
 jest.mock('../../src/data/model/user')
 
 const accessToken = 'ACCESSTOKEN'
@@ -33,6 +38,12 @@ beforeEach(() => {
       role: 'Professional'
     }
   ]
+})
+
+beforeAll(() => {
+  bcrypt.compare.mockImplementation((a, b) => a === b)
+
+  jwt.sign.mockImplementation(() => accessToken)
 })
 
 describe('Register', () => {
@@ -123,8 +134,6 @@ describe('Register', () => {
 
     const result = await AuthController.registerUser(req, res)
 
-    console.log(result)
-
     expect(result['token']).toBeUndefined()
     expect(result['error']).toBeDefined()
     expect(result).toEqual({ 'error': 'Invalid password format' })
@@ -133,6 +142,17 @@ describe('Register', () => {
 })
 
 describe('Authenticate', () => {
+
+  beforeAll(() => {
+    User.findOne.mockImplementation(({ email }) => {
+      return {
+        select: jest.fn().mockImplementation(() => userList.find(user => {
+          return user.email === email
+        })
+        )
+      }
+    })
+  })
 
   test('Should authenticate a client user', async () => {
     const req = {
@@ -216,7 +236,7 @@ describe('Authenticate', () => {
     const req = {
       body: {
         email: 'professional@test.com',
-        password: '123456',
+        password: '123456789',
         role: 'Professional'
       }
     }
