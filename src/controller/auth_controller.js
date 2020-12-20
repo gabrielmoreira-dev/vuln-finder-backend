@@ -31,7 +31,6 @@ module.exports = {
   },
 
   authenticateUser: async (req, res) => {
-
     const { email, password, role } = req.body
 
     try {
@@ -57,7 +56,6 @@ module.exports = {
     catch (e) {
       return generateError(res, 500, e.message)
     }
-
   }
 
 }

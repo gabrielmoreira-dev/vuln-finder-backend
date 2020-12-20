@@ -4,7 +4,6 @@ const generateError = require('../common/generate_error')
 const errors = require('../common/errors')
 
 module.exports = (req, res, next) => {
-
   const authHeader = req.headers.authorization
 
   if (!authHeader) {
@@ -27,11 +26,12 @@ module.exports = (req, res, next) => {
     if (error) {
       return generateError(res, 401, errors.invalidToken)
     }
+
     req.user = {
       id: decoded.id,
       role: decoded.role
     }
+
     return next()
   })
-
 }
