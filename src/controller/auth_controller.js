@@ -1,6 +1,8 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
+const generateError = require('../common/generate_error')
+const errors = require('../common/errors')
 const User = require('../data/model/user')
 
 module.exports = {
@@ -10,15 +12,11 @@ module.exports = {
 
     try {
       if (await User.findOne({ email })) {
-        return res.status(400).send({
-          error: 'User already registered'
-        })
+        return generateError(res, 400, errors.userAlreadyRegistered)
       }
 
       if (password.length < 8) {
-        return res.status(400).send({
-          error: 'Invalid password format'
-        })
+        return generateError(res, 400, errors.invalidPasswordFormat)
       }
 
       const user = await User.create(req.body)
@@ -30,9 +28,7 @@ module.exports = {
       })
     }
     catch (e) {
-      return res.status(500).send({
-        error: e.message
-      })
+      return generateError(res, 500, e.message)
     }
   },
 
@@ -44,21 +40,15 @@ module.exports = {
       const user = await User.findOne({ email }).select('+password')
 
       if (!user) {
-        return res.status(400).send({
-          error: 'User not found'
-        })
+        return generateError(res, 400, errors.userNotFound)
       }
 
       if (user.role != role) {
-        return res.status(400).send({
-          error: 'Invalid permission'
-        })
+        return generateError(res, 400, errors.invalidPermission)
       }
 
       if (!await bcrypt.compare(password, user.password)) {
-        return res.status(400).send({
-          error: 'Invalid password'
-        })
+        return generateError(res, 400, errors.invalidPassword)
       }
 
       return res.send({
@@ -67,9 +57,7 @@ module.exports = {
 
     }
     catch (e) {
-      return res.status(500).send({
-        error: e.message
-      })
+      return generateError(res, 500, e.message)
     }
 
   }
