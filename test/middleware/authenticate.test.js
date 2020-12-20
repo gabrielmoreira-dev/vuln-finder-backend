@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 
 const authenticate = require('../../src/middleware/authenticate')
+const errors = require('../../src/common/errors')
 
 const accessToken = 'Bearer 1a2b3c456789'
 const wrongToken = 'Bearer 1a2b3c455555'
@@ -66,7 +67,7 @@ describe('Authenticate', () => {
     const result = await authenticate(req, res, next)
 
     expect(result['error']).toBeDefined()
-    expect(result).toEqual({ 'error': 'Invalid token' })
+    expect(result).toEqual({ 'error': errors.invalidToken })
 
   })
 
@@ -80,7 +81,7 @@ describe('Authenticate', () => {
     const result = await authenticate(req, res, next)
 
     expect(result['error']).toBeDefined()
-    expect(result).toEqual({ 'error': 'No authentication token provided' })
+    expect(result).toEqual({ 'error': errors.noAuthenticationTokenProvided })
   })
 
   it('Should return malformatted token error', async () => {
@@ -93,7 +94,7 @@ describe('Authenticate', () => {
     const result = await authenticate(req, res, next)
 
     expect(result['error']).toBeDefined()
-    expect(result).toEqual({ 'error': 'Malformatted token' })
+    expect(result).toEqual({ 'error': errors.malformattedToken })
   })
 
   it('Should return invalid authentication method error', async () => {
@@ -105,7 +106,7 @@ describe('Authenticate', () => {
     const result = await authenticate(req, res, next)
 
     expect(result['error']).toBeDefined()
-    expect(result).toEqual({ 'error': 'Invalid authentication method' })
+    expect(result).toEqual({ 'error': errors.invalidAuthenticationMethod })
   })
 
 })

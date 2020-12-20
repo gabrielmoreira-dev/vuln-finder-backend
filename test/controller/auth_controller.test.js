@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 
 const AuthController = require('../../src/controller/auth_controller')
 const User = require('../../src/data/model/user')
+const errors = require('../../src/common/errors')
 
 jest.mock('bcryptjs')
 jest.mock('jsonwebtoken')
@@ -119,7 +120,7 @@ describe('Register', () => {
 
     expect(result['token']).toBeUndefined()
     expect(result['error']).toBeDefined()
-    expect(result).toEqual({ 'error': 'User already registered' })
+    expect(result).toEqual({ 'error': errors.userAlreadyRegistered })
   })
 
   it('Should return an invalid password format error', async () => {
@@ -136,7 +137,7 @@ describe('Register', () => {
 
     expect(result['token']).toBeUndefined()
     expect(result['error']).toBeDefined()
-    expect(result).toEqual({ 'error': 'Invalid password format' })
+    expect(result).toEqual({ 'error': errors.invalidPasswordFormat })
   })
 
 })
@@ -197,7 +198,7 @@ describe('Authenticate', () => {
 
     expect(result['token']).toBeUndefined()
     expect(result['error']).toBeDefined()
-    expect(result).toEqual({ 'error': 'Invalid permission' })
+    expect(result).toEqual({ 'error': errors.invalidPermission })
   })
 
   test('Should not authenticate a professional user as client', async () => {
@@ -213,7 +214,7 @@ describe('Authenticate', () => {
 
     expect(result['token']).toBeUndefined()
     expect(result['error']).toBeDefined()
-    expect(result).toEqual({ 'error': 'Invalid permission' })
+    expect(result).toEqual({ 'error': errors.invalidPermission })
   })
 
   test('Should return an user not found error', async () => {
@@ -229,7 +230,7 @@ describe('Authenticate', () => {
 
     expect(result['token']).toBeUndefined()
     expect(result['error']).toBeDefined()
-    expect(result).toEqual({ 'error': 'User not found' })
+    expect(result).toEqual({ 'error': errors.userNotFound })
   })
 
   test('Should return an invalid password error', async () => {
@@ -245,7 +246,7 @@ describe('Authenticate', () => {
 
     expect(result['token']).toBeUndefined()
     expect(result['error']).toBeDefined()
-    expect(result).toEqual({ 'error': 'Invalid password' })
+    expect(result).toEqual({ 'error': errors.invalidPassword })
   })
 
 })

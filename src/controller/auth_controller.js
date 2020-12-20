@@ -21,8 +21,6 @@ module.exports = {
 
       const user = await User.create(req.body)
 
-      user.password = undefined
-
       return res.send({
         token: generateToken({ id: user.id, role: user.role })
       })
