@@ -3,7 +3,7 @@ const http = require('http')
 
 const { normalizePort, onError, onListening } = require('./utils')
 
-const port = normalizePort(process.env.PORT || 3001)
+const port = normalizePort(process.env.PORT || 3000)
 
 const server = http.createServer(app)
 server.listen(port)

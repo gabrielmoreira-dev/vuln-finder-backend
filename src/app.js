@@ -6,7 +6,6 @@ const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
-// const indexRoutes = require('./routes/index-routes');
-// app.use('/', indexRoutes);
+require('./route/auth_routes')(app)
 
 module.exports = app
