@@ -1,0 +1,27 @@
+POST {{baseUrl}}/client
+Content-Type: application/json
+Authorization: Bearer {{authUser.response.body.token}}
+
+{
+  "address": {
+    "cep": "37500000",
+    "street": "BPS",
+    "number": 1,
+    "district": "Cruzeiro",
+    "city": "Itajuba",
+    "state": "MG"
+  },
+  "phone": "11999999999"
+}
+###
+
+# @name authUser
+POST  {{baseUrl}}/auth/authenticate
+Content-Type: application/json
+
+{
+    "email": "client@gmail.com",
+    "password": "12345678",
+    "role": "Client"
+}
+###
