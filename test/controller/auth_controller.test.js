@@ -69,14 +69,14 @@ describe('Register', () => {
   })
 
   it('Should register a client user', async () => {
-    const user = {
+    const userData = {
       name: 'Client',
       email: 'client@gmail.com',
       password: '12345678',
       role: 'Client'
     }
 
-    const req = { body: user }
+    const req = { body: userData }
 
     const result = await AuthController.registerUser(req, res)
     const userResult = await User.findOne({ email: 'client@gmail.com' })
@@ -88,33 +88,33 @@ describe('Register', () => {
   })
 
   it('Should register a professional user', async () => {
-    const user = {
+    const userData = {
       name: 'Professional',
       email: 'professional@gmail.com',
       password: '12345678',
       role: 'Professional'
     }
 
-    const req = { body: user }
+    const req = { body: userData }
 
     const result = await AuthController.registerUser(req, res)
-    const userResult = await User.findOne({ email: 'professional@gmail.com' })
+    const user = await User.findOne({ email: 'professional@gmail.com' })
 
     expect(result['token']).toBeDefined()
     expect(result).toEqual({ 'token': accessToken })
-    expect(userResult).toBeDefined()
-    expect(userResult.role).toBe('Professional')
+    expect(user).toBeDefined()
+    expect(user.role).toBe('Professional')
   })
 
   it('Should return an user already registered error', async () => {
-    const user = {
+    const userData = {
       name: 'Professional',
       email: 'professional@test.com',
       password: '12345678',
       role: 'Professional'
     }
 
-    const req = { body: user }
+    const req = { body: userData }
 
     const result = await AuthController.registerUser(req, res)
 
@@ -124,14 +124,14 @@ describe('Register', () => {
   })
 
   it('Should return an invalid password format error', async () => {
-    const user = {
+    const userData = {
       name: 'Professional',
       email: 'professional@gmail.com',
       password: '123456',
       role: 'Professional'
     }
 
-    const req = { body: user }
+    const req = { body: userData }
 
     const result = await AuthController.registerUser(req, res)
 
