@@ -10,6 +10,16 @@ router.post(
   authorize('Client'),
   async (req, res) => {
     await ClientController.upsertClient(req, res)
-  })
+  }
+)
+
+router.get(
+  '/',
+  authenticate,
+  authorize('Client'),
+  async (req, res) => {
+    await ClientController.getClient(req, res)
+  }
+)
 
 module.exports = app => app.use('/client', router)

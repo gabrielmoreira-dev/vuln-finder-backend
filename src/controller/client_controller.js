@@ -19,6 +19,23 @@ module.exports = {
     catch (e) {
       return generateError(res, 500, e.message)
     }
+  },
+
+  getClient: async (req, res) => {
+    const user = req.user.id
+
+    try {
+      const client = await Client.findOne({ user })
+
+      if (!client) {
+        return generateError(res, 400, errors.clientNotFound)
+      }
+
+      return res.send(client)
+    }
+    catch (e) {
+      return generateError(res, 500, e.message)
+    }
   }
 
 }

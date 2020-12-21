@@ -147,9 +147,10 @@ describe('Authenticate', () => {
   beforeAll(() => {
     User.findOne.mockImplementation(({ email }) => {
       return {
-        select: jest.fn().mockImplementation(() => userList.find(user => {
-          return user.email === email
-        })
+        select: jest.fn().mockImplementation(
+          () => userList.find(user => {
+            return user.email === email
+          })
         )
       }
     })

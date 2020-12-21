@@ -15,6 +15,11 @@ Authorization: Bearer {{authUser.response.body.token}}
 }
 ###
 
+GET {{baseUrl}}/client
+Content-Type: application/json
+Authorization: Bearer {{authUser.response.body.token}}
+###
+
 # @name authUser
 POST  {{baseUrl}}/auth/authenticate
 Content-Type: application/json

@@ -1,5 +1,6 @@
 module.exports = {
   clientAlreadyRegistered: 'Client Already Registered',
+  clientNotFound: 'Unregistered client',
   invalidAuthenticationMethod: 'Invalid authentication method',
   invalidPassword: 'Invalid password',
   invalidPasswordFormat: 'Invalid password format',

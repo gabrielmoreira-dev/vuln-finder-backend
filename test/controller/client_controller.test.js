@@ -1,5 +1,6 @@
 const Client = require('../../src/data/model/client')
 const ClientController = require('../../src/controller/client_controller')
+const errors = require('../../src/common/errors')
 
 jest.mock('../../src/data/model/client')
 
@@ -94,6 +95,40 @@ describe('Insert client', () => {
     expect(result['status']).toBeDefined()
     expect(result['status']).toEqual(200)
     expect(clientList[0].phone).toBe('11888888888')
+  })
+
+})
+
+describe('Get client', () => {
+
+  beforeAll(() => {
+    Client.findOne.mockImplementation(({ user }) => {
+      return clientList.find(client => {
+        return client.user === user
+      })
+    })
+  })
+
+  it('Should return the client', async () => {
+    const req = {
+      user: { id: 0 }
+    }
+
+    const result = await ClientController.getClient(req, res)
+
+    expect(result['status']).toBeDefined()
+    expect(result['status']).toEqual(200)
+  })
+
+  it('Should return an unregistered client error', async () => {
+    const req = {
+      user: { id: 1 }
+    }
+
+    const result = await ClientController.getClient(req, res)
+
+    expect(result['error']).toBeDefined()
+    expect(result).toEqual({ 'error': errors.clientNotFound })
   })
 
 })
