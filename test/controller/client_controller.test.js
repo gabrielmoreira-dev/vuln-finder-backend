@@ -57,12 +57,9 @@ describe('Insert client', () => {
         })
       }
       else {
-        if (body.address) {
-          clientList[index].address = body.address
-        }
-        if (body.phone) {
-          clientList[index].phone = body.phone
-        }
+        Object.keys(body).forEach(key => {
+          clientList[index][key] = body[key]
+        })
       }
 
       return true
