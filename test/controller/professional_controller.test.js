@@ -99,3 +99,75 @@ describe('Insert professional', () => {
 
 })
 
+describe('Get professional', () => {
+
+  beforeAll(() => {
+    Professional.findOne.mockImplementation(({ user }) => {
+      return {
+        populate: () => professionalList.find(professional => {
+          return professional.user === user
+        })
+      }
+    })
+  })
+
+  it('Should return the professional', async () => {
+    const req = {
+      user: { id: 0 }
+    }
+
+    const result = await ProfessionalController.getProfessional(req, res)
+
+    expect(result['status']).toBeDefined()
+    expect(result['status']).toEqual(200)
+  })
+
+  it('Should return an unregistered professional error', async () => {
+    const req = {
+      user: { id: 1 }
+    }
+
+    const result = await ProfessionalController.getProfessional(req, res)
+
+    expect(result['error']).toBeDefined()
+    expect(result).toEqual({ 'error': errors.professionalNotFound })
+  })
+
+})
+
+describe('Get professional by id', () => {
+
+  beforeAll(() => {
+    Professional.findById.mockImplementation((id) => {
+      return {
+        populate: () => professionalList.find(professional => {
+          return professional.id === id
+        })
+      }
+    })
+  })
+
+  it('Should return the professional', async () => {
+    const req = {
+      params: { id: 0 }
+    }
+
+    const result = await ProfessionalController.getProfessionalById(req, res)
+
+    expect(result['status']).toBeDefined()
+    expect(result['status']).toEqual(200)
+  })
+
+  it('Should return an unregistered professional error', async () => {
+    const req = {
+      params: { id: 1 }
+    }
+
+    const result = await ProfessionalController.getProfessionalById(req, res)
+
+    expect(result['error']).toBeDefined()
+    expect(result).toEqual({ 'error': errors.professionalNotFound })
+  })
+
+})
+

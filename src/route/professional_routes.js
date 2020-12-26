@@ -13,4 +13,22 @@ router.post(
   }
 )
 
+router.get(
+  '/profile',
+  authenticate,
+  authorize('Professional'),
+  async (req, res) => {
+    await ProfessionalController.getProfessional(req, res)
+  }
+)
+
+router.get(
+  '/:id',
+  authenticate,
+  authorize('Customer'),
+  async (req, res) => {
+    await ProfessionalController.getProfessionalById(req, res)
+  }
+)
+
 module.exports = app => app.use('/professionals', router)
