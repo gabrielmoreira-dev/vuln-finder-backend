@@ -2,10 +2,10 @@ POST {{baseUrl}}/auth/register
 Content-Type: application/json
 
 {
-  "name": "Client test",
-  "email": "client@gmail.com",
+  "name": "Customer test",
+  "email": "customer@gmail.com",
   "password": "12345678",
-  "role": "Client" 
+  "role": "Customer" 
 }
 ###
 
@@ -13,8 +13,8 @@ POST {{baseUrl}}/auth/authenticate
 Content-Type: application/json
 
 {
-  "email": "client@gmail.com",
+  "email": "customer@gmail.com",
   "password": "12345678",
-  "role": "Client" 
+  "role": "Customer" 
 }
 ###

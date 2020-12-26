@@ -18,14 +18,14 @@ const next = () => {
 
 describe('Authorize', () => {
 
-  it('Should authorize a client user in a client exclusive service', () => {
+  it('Should authorize a customer user in a customer exclusive service', () => {
     const req = {
       user: {
-        role: 'Client'
+        role: 'Customer'
       }
     }
 
-    const authorizeUser = authorize(['Client'])
+    const authorizeUser = authorize(['Customer'])
 
     const result = authorizeUser(req, res, next)
 
@@ -48,10 +48,10 @@ describe('Authorize', () => {
     expect(result).toEqual({ 'status': 200 })
   })
 
-  it('Should not authorize a client user in a professional exclusive service', () => {
+  it('Should not authorize a customer user in a professional exclusive service', () => {
     const req = {
       user: {
-        role: 'Client'
+        role: 'Customer'
       }
     }
 
@@ -63,14 +63,14 @@ describe('Authorize', () => {
     expect(result).toEqual({ 'error': errors.unauthorized })
   })
 
-  it('Should not authorize a professional user in a client exclusive service', () => {
+  it('Should not authorize a professional user in a customer exclusive service', () => {
     const req = {
       user: {
         role: 'Professional'
       }
     }
 
-    const authorizeUser = authorize(['Client'])
+    const authorizeUser = authorize(['Customer'])
 
     const result = authorizeUser(req, res, next)
 
