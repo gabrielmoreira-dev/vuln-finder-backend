@@ -8,6 +8,7 @@ module.exports = {
   invalidToken: 'Invalid token',
   malformattedToken: 'Malformatted token',
   noAuthenticationTokenProvided: 'No authentication token provided',
+  noProfessionalFound: 'No professional found',
   professionalNotFound: 'Professional not found',
   unauthorized: 'Unauthorized',
   userAlreadyRegistered: 'User already registered',

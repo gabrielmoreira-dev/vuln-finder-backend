@@ -14,6 +14,15 @@ router.post(
 )
 
 router.get(
+  '/',
+  authenticate,
+  authorize('Customer'),
+  async (req, res) => {
+    await ProfessionalController.getProfessionalList(req, res)
+  }
+)
+
+router.get(
   '/profile',
   authenticate,
   authorize('Professional'),

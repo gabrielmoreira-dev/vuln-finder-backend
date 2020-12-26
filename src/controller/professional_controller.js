@@ -21,6 +21,25 @@ module.exports = {
     }
   },
 
+  getProfessionalList: async (req, res) => {
+    const city = req.query.city
+
+    try {
+      const professionalList = await Professional.find(city ? {
+        'address.city': city
+      } : null)
+
+      if (!professionalList || professionalList.length === 0) {
+        return generateError(res, 400, errors.noProfessionalFound)
+      }
+
+      return res.send(professionalList)
+    }
+    catch (e) {
+      return generateError(res, 500, e.message)
+    }
+  },
+
   getProfessional: async (req, res) => {
     const user = req.user.id
 
@@ -42,8 +61,6 @@ module.exports = {
     const professionalId = req.params.id
 
     try {
-      console.log(professionalId)
-
       const professional = await Professional.findById(professionalId).populate('user')
 
       if (!professional) {

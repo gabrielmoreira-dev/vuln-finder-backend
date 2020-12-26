@@ -99,6 +99,65 @@ describe('Insert professional', () => {
 
 })
 
+describe('Get professional list by city', () => {
+
+  beforeAll(() => {
+    Professional.find.mockImplementation(params => {
+      return params ?
+        professionalList.filter(professional => {
+          return professional.address.city === params['address.city']
+        }) :
+        professionalList
+    })
+  })
+
+  it('Should return a list of professionals', async () => {
+    const req = {
+      query: {
+        city: 'Itajuba'
+      }
+    }
+
+    const result = await ProfessionalController.getProfessionalList(req, res)
+
+    const professionalListResult = result.body
+
+    expect(result['status']).toBeDefined()
+    expect(result['status']).toEqual(200)
+    expect(professionalListResult.length).toBe(1)
+    expect(professionalListResult[0].id).toBe(0)
+  })
+
+  it('Should return a general list of professionals', async () => {
+    const req = {
+      query: {}
+    }
+
+    const result = await ProfessionalController.getProfessionalList(req, res)
+
+    const professionalListResult = result.body
+
+    expect(result['status']).toBeDefined()
+    expect(result['status']).toEqual(200)
+    expect(professionalListResult.length).toBe(1)
+    expect(professionalListResult[0].id).toBe(0)
+  })
+
+  it('Should return a empty list error', async () => {
+    const req = {
+      query: {
+        city: 'Pouso Alegre'
+      }
+    }
+
+    const result = await ProfessionalController.getProfessionalList(req, res)
+
+    expect(result['error']).toBeDefined()
+    expect(result).toEqual({ 'error': errors.noProfessionalFound })
+  })
+
+})
+
 describe('Get professional', () => {
 
   beforeAll(() => {

@@ -18,6 +18,13 @@ Authorization: Bearer {{authUser.response.body.token}}
 }
 ###
 
+# @name getProfessionalList
+@city = Itajuba
+GET {{baseUrl}}/professionals?city={{city}}
+Content-Type: application/json
+Authorization: Bearer {{authUser.response.body.token}}
+###
+
 # @name getProfessional
 GET {{baseUrl}}/professionals/profile
 Content-Type: application/json
