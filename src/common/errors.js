@@ -1,5 +1,4 @@
 module.exports = {
-  customerAlreadyRegistered: 'Customer Already Registered',
   customerNotFound: 'Customer not found',
   invalidAuthenticationMethod: 'Invalid authentication method',
   invalidPassword: 'Invalid password',
