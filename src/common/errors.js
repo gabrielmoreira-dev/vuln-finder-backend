@@ -1,6 +1,6 @@
 module.exports = {
   customerAlreadyRegistered: 'Customer Already Registered',
-  customerNotFound: 'Unregistered customer',
+  customerNotFound: 'Customer not found',
   invalidAuthenticationMethod: 'Invalid authentication method',
   invalidPassword: 'Invalid password',
   invalidPasswordFormat: 'Invalid password format',

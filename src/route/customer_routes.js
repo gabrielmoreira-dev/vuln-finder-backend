@@ -14,7 +14,7 @@ router.post(
 )
 
 router.get(
-  '/',
+  '/profile',
   authenticate,
   authorize('Customer'),
   async (req, res) => {
