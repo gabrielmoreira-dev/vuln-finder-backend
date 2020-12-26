@@ -23,6 +23,6 @@ const ProfessionalSchema = new mongoose.Schema({
   }
 })
 
-const Professional = mongoose.model('Pofessional', ProfessionalSchema)
+const Professional = mongoose.model('Professional', ProfessionalSchema)
 
 module.exports = Professional

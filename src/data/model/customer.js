@@ -2,7 +2,7 @@ const mongoose = require('../infrastructure/mongoose')
 
 const Address = require('./address')
 
-const ClientSchema = new mongoose.Schema({
+const CustomerSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -15,6 +15,6 @@ const ClientSchema = new mongoose.Schema({
   }
 })
 
-const Client = mongoose.model('Client', ClientSchema)
+const Customer = mongoose.model('Customer', CustomerSchema)
 
-module.exports = Client
+module.exports = Customer

@@ -1,5 +1,5 @@
-# @name upsertClient
-POST {{baseUrl}}/client
+# @name upsertCustomer
+POST {{baseUrl}}/customers
 Content-Type: application/json
 Authorization: Bearer {{authUser.response.body.token}}
 
@@ -16,15 +16,15 @@ Authorization: Bearer {{authUser.response.body.token}}
 }
 ###
 
-# @name getClient
-GET {{baseUrl}}/client
+# @name getCustomer
+GET {{baseUrl}}/customers
 Content-Type: application/json
 Authorization: Bearer {{authUser.response.body.token}}
 ###
 
-# @name getClientById
-@clientId = 5fe00fc9e64caff4fda15753
-GET {{baseUrl}}/client/{{clientId}}
+# @name getCustomerById
+@customerId = 5fe00fc9e64caff4fda15753
+GET {{baseUrl}}/customers/{{customerId}}
 Content-Type: application/json
 Authorization: Bearer {{authUser.response.body.token}}
 ###
@@ -34,9 +34,9 @@ POST  {{baseUrl}}/auth/authenticate
 Content-Type: application/json
 
 {
-    "email": "client@gmail.com",
+    "email": "customer@gmail.com",
     "password": "12345678",
-    "role": "Client"
+    "role": "Customer"
 }
 ###
 

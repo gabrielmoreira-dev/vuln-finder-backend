@@ -2,23 +2,23 @@ const express = require('express')
 const router = express.Router()
 const authenticate = require('../middleware/authenticate')
 const authorize = require('../middleware/authorize')
-const ClientController = require('../controller/client_controller')
+const CustomerController = require('../controller/customer_controller')
 
 router.post(
   '/',
   authenticate,
-  authorize('Client'),
+  authorize('Customer'),
   async (req, res) => {
-    await ClientController.upsertClient(req, res)
+    await CustomerController.upsertCustomer(req, res)
   }
 )
 
 router.get(
   '/',
   authenticate,
-  authorize('Client'),
+  authorize('Customer'),
   async (req, res) => {
-    await ClientController.getClient(req, res)
+    await CustomerController.getCustomer(req, res)
   }
 )
 
@@ -27,8 +27,8 @@ router.get(
   authenticate,
   authorize('Professional'),
   async (req, res) => {
-    await ClientController.getClientById(req, res)
+    await CustomerController.getCustomerById(req, res)
   }
 )
 
-module.exports = app => app.use('/client', router)
+module.exports = app => app.use('/customers', router)

@@ -26,10 +26,10 @@ beforeEach(() => {
   userList = [
     {
       id: 1,
-      name: 'Client',
-      email: 'client@test.com',
+      name: 'Customer',
+      email: 'customer@test.com',
       password: '12345678',
-      role: 'Client'
+      role: 'Customer'
     },
     {
       id: 2,
@@ -68,23 +68,23 @@ describe('Register', () => {
     })
   })
 
-  it('Should register a client user', async () => {
+  it('Should register a customer user', async () => {
     const userData = {
-      name: 'Client',
-      email: 'client@gmail.com',
+      name: 'Customer',
+      email: 'customer@gmail.com',
       password: '12345678',
-      role: 'Client'
+      role: 'Customer'
     }
 
     const req = { body: userData }
 
     const result = await AuthController.registerUser(req, res)
-    const userResult = await User.findOne({ email: 'client@gmail.com' })
+    const userResult = await User.findOne({ email: 'customer@gmail.com' })
 
     expect(result['token']).toBeDefined()
     expect(result).toEqual({ 'token': accessToken })
     expect(userResult).toBeDefined()
-    expect(userResult.role).toBe('Client')
+    expect(userResult.role).toBe('Customer')
   })
 
   it('Should register a professional user', async () => {
@@ -156,12 +156,12 @@ describe('Authenticate', () => {
     })
   })
 
-  test('Should authenticate a client user', async () => {
+  test('Should authenticate a customer user', async () => {
     const req = {
       body: {
-        email: 'client@test.com',
+        email: 'customer@test.com',
         password: '12345678',
-        role: 'Client'
+        role: 'Customer'
       }
     }
 
@@ -186,10 +186,10 @@ describe('Authenticate', () => {
     expect(result).toEqual({ 'token': accessToken })
   })
 
-  test('Should not authenticate a client user as professional', async () => {
+  test('Should not authenticate a customer user as professional', async () => {
     const req = {
       body: {
-        email: 'client@test.com',
+        email: 'customer@test.com',
         password: '12345678',
         role: 'Professional'
       }
@@ -202,12 +202,12 @@ describe('Authenticate', () => {
     expect(result).toEqual({ 'error': errors.invalidPermission })
   })
 
-  test('Should not authenticate a professional user as client', async () => {
+  test('Should not authenticate a professional user as customer', async () => {
     const req = {
       body: {
         email: 'professional@test.com',
         password: '12345678',
-        role: 'Client'
+        role: 'Customer'
       }
     }
 

@@ -13,4 +13,4 @@ router.post(
   }
 )
 
-module.exports = app => app.use('/professional', router)
+module.exports = app => app.use('/professionals', router)

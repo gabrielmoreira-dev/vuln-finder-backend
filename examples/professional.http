@@ -1,5 +1,5 @@
 # @name upsertProfessional
-POST {{baseUrl}}/professional
+POST {{baseUrl}}/professionals
 Content-Type: application/json
 Authorization: Bearer {{authUser.response.body.token}}
 
