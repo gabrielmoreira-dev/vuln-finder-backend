@@ -22,4 +22,13 @@ router.get(
   }
 )
 
+router.get(
+  '/:id',
+  authenticate,
+  authorize('Professional'),
+  async (req, res) => {
+    await ClientController.getClientById(req, res)
+  }
+)
+
 module.exports = app => app.use('/client', router)

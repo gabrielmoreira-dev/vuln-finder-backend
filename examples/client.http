@@ -1,3 +1,4 @@
+# @name insertClient
 POST {{baseUrl}}/client
 Content-Type: application/json
 Authorization: Bearer {{authUser.response.body.token}}
@@ -15,7 +16,15 @@ Authorization: Bearer {{authUser.response.body.token}}
 }
 ###
 
+# @name getClient
 GET {{baseUrl}}/client
+Content-Type: application/json
+Authorization: Bearer {{authUser.response.body.token}}
+###
+
+# @name getClientById
+@clientId = 5fe00fc9e64caff4fda15753
+GET {{baseUrl}}/client/{{clientId}}
 Content-Type: application/json
 Authorization: Bearer {{authUser.response.body.token}}
 ###
@@ -28,5 +37,16 @@ Content-Type: application/json
     "email": "client@gmail.com",
     "password": "12345678",
     "role": "Client"
+}
+###
+
+# @name authUser
+POST  {{baseUrl}}/auth/authenticate
+Content-Type: application/json
+
+{
+    "email": "professional@gmail.com",
+    "password": "12345678",
+    "role": "Professional"
 }
 ###

@@ -35,6 +35,7 @@ let clientList
 beforeEach(() => {
   clientList = [
     {
+      id: 0,
       user: 0,
       ...clientData
     }
@@ -103,9 +104,11 @@ describe('Get client', () => {
 
   beforeAll(() => {
     Client.findOne.mockImplementation(({ user }) => {
-      return clientList.find(client => {
-        return client.user === user
-      })
+      return {
+        populate: () => clientList.find(client => {
+          return client.user === user
+        })
+      }
     })
   })
 
@@ -126,6 +129,42 @@ describe('Get client', () => {
     }
 
     const result = await ClientController.getClient(req, res)
+
+    expect(result['error']).toBeDefined()
+    expect(result).toEqual({ 'error': errors.clientNotFound })
+  })
+
+})
+
+describe('Get client by id', () => {
+
+  beforeAll(() => {
+    Client.findById.mockImplementation((id) => {
+      return {
+        populate: () => clientList.find(client => {
+          return client.id === id
+        })
+      }
+    })
+  })
+
+  it('Should return the client', async () => {
+    const req = {
+      params: { id: 0 }
+    }
+
+    const result = await ClientController.getClientById(req, res)
+
+    expect(result['status']).toBeDefined()
+    expect(result['status']).toEqual(200)
+  })
+
+  it('Should return an unregistered client error', async () => {
+    const req = {
+      params: { id: 1 }
+    }
+
+    const result = await ClientController.getClientById(req, res)
 
     expect(result['error']).toBeDefined()
     expect(result).toEqual({ 'error': errors.clientNotFound })

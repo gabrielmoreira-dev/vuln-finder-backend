@@ -25,7 +25,24 @@ module.exports = {
     const user = req.user.id
 
     try {
-      const client = await Client.findOne({ user })
+      const client = await Client.findOne({ user }).populate('user')
+
+      if (!client) {
+        return generateError(res, 400, errors.clientNotFound)
+      }
+
+      return res.send(client)
+    }
+    catch (e) {
+      return generateError(res, 500, e.message)
+    }
+  },
+
+  getClientById: async (req, res) => {
+    const clientId = req.params.id
+
+    try {
+      const client = await Client.findById(clientId).populate('user')
 
       if (!client) {
         return generateError(res, 400, errors.clientNotFound)
