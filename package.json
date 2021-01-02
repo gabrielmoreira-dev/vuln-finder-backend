@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --testEnvironment=node --detectOpenHandles --forceExit",
-    "dev": "nodemon src/index"
+    "dev": "nodemon lib/index"
   },
   "repository": {
     "type": "git",
