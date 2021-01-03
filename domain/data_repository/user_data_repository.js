@@ -1,5 +1,5 @@
 module.exports = class {
-  insertUser(userEntity) { }
+  insertUser(user) { }
 
   getUserByEmail(email) { }
 

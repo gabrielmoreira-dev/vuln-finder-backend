@@ -23,7 +23,7 @@ Authorization: Bearer {{authUser.response.body.token}}
 ###
 
 # @name getCustomerById
-@customerId = 5fe00fc9e64caff4fda15753
+@customerId = 5fe6c314e64caff4fd4bd6c3
 GET {{baseUrl}}/customers/{{customerId}}
 Content-Type: application/json
 Authorization: Bearer {{authUser.response.body.token}}
