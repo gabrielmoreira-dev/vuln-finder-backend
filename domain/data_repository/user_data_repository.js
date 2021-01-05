@@ -1,5 +1,5 @@
 module.exports = class {
-  insertUser(user) { }
+  insertUser(name, email, password, role) { }
 
   getUserByEmail(email) { }
 

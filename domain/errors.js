@@ -28,9 +28,16 @@ class UserNotFoundError extends Error {
   }
 }
 
+class UserAlreadyRegisteredError extends Error {
+  constructor() {
+    super("User already registered")
+  }
+}
+
 module.exports = {
   InvalidEmailFormatError,
   InvalidPasswordLengthError,
   InvalidPasswordFormatError,
-  UserNotFoundError
+  UserNotFoundError,
+  UserAlreadyRegisteredError
 }

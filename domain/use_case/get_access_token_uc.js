@@ -7,8 +7,8 @@ const GetAccessTokenUC = class {
     this.userRepository = userRepository
   }
 
-  getFuture = params => {
-    const user = this.userRepository.getUserByEmail(params.email)
+  getFuture = async params => {
+    const user = await this.userRepository.getUserByEmail(params.email)
     if (!user) {
       throw new UserNotFoundError()
     }
