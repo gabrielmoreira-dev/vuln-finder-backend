@@ -2,10 +2,14 @@ const jwt = require('jsonwebtoken')
 jest.mock('jsonwebtoken')
 
 const { GetAccessTokenUC, GetAccessTokenUCParams } = require('../../../domain/use_case/get_access_token_uc')
-const { submitRequest, assertEquals } = require('../../test_utils')
+const { UserNotFoundError } = require('../../../domain/errors')
+const { submitRequest, assertEquals, assertErrorType } = require('../../test_utils')
 
-const id = 'TEST_ID'
-const role = 'Client'
+const user = {
+  email: 'test@test.com',
+  id: 'USER_ID',
+  role: "Client"
+}
 const accessToken = 'ACCESS_TOKEN'
 
 beforeAll(() => {
@@ -14,10 +18,9 @@ beforeAll(() => {
 
 describe("Get access token", () => {
   it("Shoult return an access token", async () => {
-    const getAccessTokenUC = makeUseCase()
+    const getAccessTokenUC = makeUseCase(user)
     const params = makeParams({
-      id: id,
-      role: role,
+      email: user.email,
     })
 
     const receivedToken = await submitRequest({
@@ -27,8 +30,32 @@ describe("Get access token", () => {
 
     assertEquals(receivedToken, accessToken)
   })
+
+  it("Should throw an user not found error", async () => {
+    const getAccessTokenUC = makeUseCase(null)
+    const params = makeParams({
+      email: user.email,
+    })
+    let error = null
+    const errorCallback = e => error = e
+
+    const receivedToken = await submitRequest({
+      uc: getAccessTokenUC,
+      params: params,
+      errorCallback: errorCallback
+    })
+
+    assertErrorType(error, UserNotFoundError)
+  })
 })
 
-const makeUseCase = _ => new GetAccessTokenUC()
+const makeUseCase = user => {
+  const mockUserRepository = {
+    getUserByEmail: _ => user
+  }
+  return new GetAccessTokenUC({
+    userRepository: mockUserRepository
+  })
+}
 
-const makeParams = ({ id, role }) => new GetAccessTokenUCParams(id, role)
+const makeParams = ({ email }) => new GetAccessTokenUCParams(email)

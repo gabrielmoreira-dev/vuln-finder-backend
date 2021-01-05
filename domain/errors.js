@@ -22,8 +22,15 @@ class InvalidPasswordFormatError extends PasswordFormatError {
   }
 }
 
+class UserNotFoundError extends Error {
+  constructor() {
+    super("User not found")
+  }
+}
+
 module.exports = {
   InvalidEmailFormatError,
   InvalidPasswordLengthError,
-  InvalidPasswordFormatError
+  InvalidPasswordFormatError,
+  UserNotFoundError
 }
