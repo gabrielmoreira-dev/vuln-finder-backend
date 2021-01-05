@@ -3,9 +3,7 @@ const { InvalidPasswordLengthError, InvalidPasswordFormatError } = require('../.
 const ValidatePasswordFormatUC = class {
   getFuture = params => {
     const password = params.password
-
     this.validatePasswordLength(password)
-
     this.validatePasswordComposition(password)
   }
 
@@ -18,7 +16,6 @@ const ValidatePasswordFormatUC = class {
 
   validatePasswordComposition = password => {
     const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}/
-
     if (!password.match(regex)) {
       throw new InvalidPasswordFormatError()
     }

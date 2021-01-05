@@ -1,12 +1,13 @@
 const jwt = require('jsonwebtoken')
 
 const GetAccessTokenUC = class {
-  getFuture = params => jwt.sign({
+  getFuture = params => this.generateAccessToken({
     id: params.id,
     role: params.role
-  }, process.env.JWT_HASH, {
-    expiresIn: 86400
   })
+
+  generateAccessToken = (id, role) => jwt
+    .sign({ id, role }, process.env.JWT_HASH, { expiresIn: 86400 })
 }
 
 const GetAccessTokenUCParams = class {
