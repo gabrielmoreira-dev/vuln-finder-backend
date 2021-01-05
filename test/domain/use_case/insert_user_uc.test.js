@@ -6,13 +6,13 @@ const registeredUser = {
   name: 'User',
   email: 'user@test.com',
   password: 'Abc123$#',
-  role: 'Client'
+  role: 'Customer'
 }
 const unregisteredUser = {
   name: 'User',
   email: 'user2@test.com',
   password: 'Abc123$#',
-  role: 'Client'
+  role: 'Customer'
 }
 
 describe("Insert user", () => {

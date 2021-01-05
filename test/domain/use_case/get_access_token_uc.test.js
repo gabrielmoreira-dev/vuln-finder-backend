@@ -8,7 +8,7 @@ const { submitRequest, assertEquals, assertErrorType } = require('../../test_uti
 const user = {
   email: 'test@test.com',
   id: 'USER_ID',
-  role: "Client"
+  role: "Customer"
 }
 const accessToken = 'ACCESS_TOKEN'
 
