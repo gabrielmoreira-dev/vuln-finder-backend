@@ -1,3 +1,9 @@
+class InvalidEmailFormatError extends Error {
+  constructor() {
+    super("The provided email is invalid")
+  }
+}
+
 class PasswordFormatError extends Error {
   constructor(message) {
     super(message)
@@ -17,6 +23,7 @@ class InvalidPasswordFormatError extends PasswordFormatError {
 }
 
 module.exports = {
+  InvalidEmailFormatError,
   InvalidPasswordLengthError,
   InvalidPasswordFormatError
 }
