@@ -9,7 +9,7 @@ const GetIsUserRegisteredUC = class {
 }
 
 const GetIsUserRegisteredUCParams = class {
-  constructor({ email }) {
+  constructor(email) {
     this.email = email
   }
 }

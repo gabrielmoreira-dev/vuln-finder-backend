@@ -1,10 +1,13 @@
 const { GetIsUserRegisteredUC, GetIsUserRegisteredUCParams } = require('../../../domain/use_case/get_is_user_registered_uc')
 const { submitRequest, assertTrue, assertFalse } = require('../../test_utils')
 
-describe.only('Get is user registered', () => {
+const registeredEmail = 'user@test.com'
+const unregisteredEmail = 'user2@test.com'
+
+describe('Get is user registered', () => {
   it('Should return true if the user is already registered', async () => {
-    const getIsUserRegisteredUC = makeUseCase({ isUserRegistered: true })
-    const params = makeParams()
+    const getIsUserRegisteredUC = makeUseCase()
+    const params = makeParams({ email: registeredEmail })
 
     const isUserRegistered = await submitRequest({
       uc: getIsUserRegisteredUC,
@@ -15,8 +18,8 @@ describe.only('Get is user registered', () => {
   })
 
   it('Should return false if the user is not yet registered', async () => {
-    const getIsUserRegisteredUC = makeUseCase({ isUserRegistered: false })
-    const params = makeParams()
+    const getIsUserRegisteredUC = makeUseCase()
+    const params = makeParams({ email: unregisteredEmail })
 
     const isUserRegistered = await submitRequest({
       uc: getIsUserRegisteredUC,
@@ -27,11 +30,11 @@ describe.only('Get is user registered', () => {
   })
 })
 
-const makeUseCase = ({ isUserRegistered }) => {
+const makeUseCase = _ => {
   const mockUserRepository = {
-    getUserByEmail: _ => {
+    getUserByEmail: email => {
       return {
-        then: _ => isUserRegistered
+        then: _ => email === registeredEmail
       }
     }
   }
@@ -40,6 +43,4 @@ const makeUseCase = ({ isUserRegistered }) => {
   })
 }
 
-const makeParams = _ => new GetIsUserRegisteredUCParams({
-  email: 'user@test.com'
-})
+const makeParams = ({ email }) => new GetIsUserRegisteredUCParams(email)
