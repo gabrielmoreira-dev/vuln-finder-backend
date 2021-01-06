@@ -1,3 +1,9 @@
+class MissingRequiredParameterError extends Error {
+  constructor() {
+    super("Missing required parameter")
+  }
+}
+
 class InvalidEmailFormatError extends Error {
   constructor() {
     super("The provided email is invalid")
@@ -35,6 +41,7 @@ class UserAlreadyRegisteredError extends Error {
 }
 
 module.exports = {
+  MissingRequiredParameterError,
   InvalidEmailFormatError,
   InvalidPasswordLengthError,
   InvalidPasswordFormatError,

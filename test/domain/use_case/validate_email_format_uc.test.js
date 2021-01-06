@@ -1,6 +1,6 @@
 const { ValidateEmailFormatUC, ValidateEmailFormatUCParams } = require('../../../domain/use_case/validate_email_format_uc')
 const { InvalidEmailFormatError } = require('../../../domain/errors')
-const { submitRequest, assertNull, assertErrorType } = require('../../test_utils')
+const { submitUCRequest, assertNull, assertErrorType } = require('../../test_utils')
 
 const validEmail = 'test@test.com'
 const invalidEmail = 'test'
@@ -12,7 +12,7 @@ describe("Validate email format", () => {
     let error = null
     const errorCallback = e => error = e
 
-    await submitRequest({
+    await submitUCRequest({
       uc: validateEmailFormatUC,
       params: params,
       errorCallback: errorCallback
@@ -27,7 +27,7 @@ describe("Validate email format", () => {
     let error = null
     const errorCallback = e => error = e
 
-    await submitRequest({
+    await submitUCRequest({
       uc: validateEmailFormatUC,
       params: params,
       errorCallback: errorCallback

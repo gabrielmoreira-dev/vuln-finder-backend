@@ -1,6 +1,15 @@
-const submitRequest = async ({ uc, params, errorCallback }) => {
+const submitUCRequest = async ({ uc, params, errorCallback }) => {
   try {
     return await uc.getFuture(params)
+  }
+  catch (e) {
+    errorCallback(e)
+  }
+}
+
+const submitControllerRequest = async ({ func, request, errorCallback }) => {
+  try {
+    return await func(request)
   }
   catch (e) {
     errorCallback(e)
@@ -20,7 +29,8 @@ const assertErrorType = (error, type) => expect(error).toBeInstanceOf(type)
 const assertHaveBeenCalled = func => expect(func).toHaveBeenCalled()
 
 module.exports = {
-  submitRequest,
+  submitUCRequest,
+  submitControllerRequest,
   assertTrue,
   assertFalse,
   assertNull,

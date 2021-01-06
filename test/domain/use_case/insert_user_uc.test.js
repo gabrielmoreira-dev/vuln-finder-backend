@@ -3,7 +3,7 @@ jest.mock('bcryptjs')
 
 const { UserAlreadyRegisteredError } = require('../../../domain/errors')
 const { InsertUserUC, InsertUserUCParams } = require('../../../domain/use_case/insert_user_uc')
-const { submitRequest, assertNull, assertErrorType, assertHaveBeenCalled } = require('../../test_utils')
+const { submitUCRequest, assertNull, assertErrorType, assertHaveBeenCalled } = require('../../test_utils')
 
 const registeredUser = {
   name: 'User',
@@ -34,7 +34,7 @@ describe("Insert user", () => {
     let error = null
     const errorCallback = e => error = e
 
-    await submitRequest({
+    await submitUCRequest({
       uc: insertUserUC,
       params: params,
       errorCallback: errorCallback
@@ -55,7 +55,7 @@ describe("Insert user", () => {
     let error = null
     const errorCallback = e => error = e
 
-    await submitRequest({
+    await submitUCRequest({
       uc: insertUserUC,
       params: params,
       errorCallback: errorCallback

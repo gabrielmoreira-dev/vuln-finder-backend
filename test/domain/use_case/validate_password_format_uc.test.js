@@ -1,6 +1,6 @@
 const { ValidatePasswordFormatUC, ValidatePasswordFormatUCParams } = require('../../../domain/use_case/validate_password_format_uc')
 const { InvalidPasswordLengthError, InvalidPasswordFormatError } = require('../../../domain/errors')
-const { submitRequest, assertErrorType, assertNull } = require('../../test_utils')
+const { submitUCRequest, assertErrorType, assertNull } = require('../../test_utils')
 
 const validPassword = 'Abc123@#'
 const shortPassword = 'Abc123@'
@@ -16,7 +16,7 @@ describe("Validate password format", () => {
     let error = null
     const errorCallback = e => error = e
 
-    await submitRequest({
+    await submitUCRequest({
       uc: validatePasswordFormatUC,
       params: params,
       errorCallback: errorCallback
@@ -31,7 +31,7 @@ describe("Validate password format", () => {
     let error = null
     const errorCallback = e => error = e
 
-    await submitRequest({
+    await submitUCRequest({
       uc: validatePasswordFormatUC,
       params: params,
       errorCallback: errorCallback
@@ -46,7 +46,7 @@ describe("Validate password format", () => {
     let error = null
     const errorCallback = e => error = e
 
-    await submitRequest({
+    await submitUCRequest({
       uc: validatePasswordFormatUC,
       params: params,
       errorCallback: errorCallback
@@ -61,7 +61,7 @@ describe("Validate password format", () => {
     let error = null
     const errorCallback = e => error = e
 
-    await submitRequest({
+    await submitUCRequest({
       uc: validatePasswordFormatUC,
       params: params,
       errorCallback: errorCallback
@@ -76,7 +76,7 @@ describe("Validate password format", () => {
     let error = null
     const errorCallback = e => error = e
 
-    await submitRequest({
+    await submitUCRequest({
       uc: validatePasswordFormatUC,
       params: params,
       errorCallback: errorCallback
@@ -91,7 +91,7 @@ describe("Validate password format", () => {
     let error = null
     const errorCallback = e => error = e
 
-    await submitRequest({
+    await submitUCRequest({
       uc: validatePasswordFormatUC,
       params: params,
       errorCallback: errorCallback

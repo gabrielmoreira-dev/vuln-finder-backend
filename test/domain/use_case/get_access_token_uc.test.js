@@ -3,7 +3,7 @@ jest.mock('jsonwebtoken')
 
 const { GetAccessTokenUC, GetAccessTokenUCParams } = require('../../../domain/use_case/get_access_token_uc')
 const { UserNotFoundError } = require('../../../domain/errors')
-const { submitRequest, assertEquals, assertErrorType } = require('../../test_utils')
+const { submitUCRequest, assertEquals, assertErrorType } = require('../../test_utils')
 
 const user = {
   email: 'test@test.com',
@@ -23,7 +23,7 @@ describe("Get access token", () => {
       email: user.email,
     })
 
-    const receivedToken = await submitRequest({
+    const receivedToken = await submitUCRequest({
       uc: getAccessTokenUC,
       params: params
     })
@@ -39,7 +39,7 @@ describe("Get access token", () => {
     let error = null
     const errorCallback = e => error = e
 
-    const receivedToken = await submitRequest({
+    const receivedToken = await submitUCRequest({
       uc: getAccessTokenUC,
       params: params,
       errorCallback: errorCallback
