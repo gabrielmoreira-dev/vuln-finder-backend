@@ -1,3 +1,9 @@
+class UnauthorizedError extends Error {
+  constructor() {
+    super("The user is not authorized to access this resource")
+  }
+}
+
 class MissingRequiredParameterError extends Error {
   constructor() {
     super("Missing required parameter")
@@ -47,6 +53,7 @@ class UserAlreadyRegisteredError extends Error {
 }
 
 module.exports = {
+  UnauthorizedError,
   MissingRequiredParameterError,
   InvalidEmailFormatError,
   InvalidPasswordError,
