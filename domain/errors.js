@@ -10,6 +10,12 @@ class InvalidEmailFormatError extends Error {
   }
 }
 
+class InvalidPasswordError extends Error {
+  constructor() {
+    super("The password is invalid")
+  }
+}
+
 class PasswordFormatError extends Error {
   constructor(message) {
     super(message)
@@ -43,6 +49,7 @@ class UserAlreadyRegisteredError extends Error {
 module.exports = {
   MissingRequiredParameterError,
   InvalidEmailFormatError,
+  InvalidPasswordError,
   InvalidPasswordLengthError,
   InvalidPasswordFormatError,
   UserNotFoundError,

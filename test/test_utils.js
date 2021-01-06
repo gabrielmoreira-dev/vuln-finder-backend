@@ -1,3 +1,17 @@
+const registeredUser = {
+  name: 'User',
+  email: 'user@test.com',
+  password: 'Abc123$#',
+  role: 'Customer'
+}
+
+const unregisteredUser = {
+  name: 'User',
+  email: 'user2@test.com',
+  password: 'Abc123$#',
+  role: 'Customer'
+}
+
 const submitUCRequest = async ({ uc, params, errorCallback }) => {
   try {
     return await uc.getFuture(params)
@@ -29,6 +43,8 @@ const assertErrorType = (error, type) => expect(error).toBeInstanceOf(type)
 const assertHaveBeenCalled = func => expect(func).toHaveBeenCalled()
 
 module.exports = {
+  registeredUser,
+  unregisteredUser,
   submitUCRequest,
   submitControllerRequest,
   assertTrue,

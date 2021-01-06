@@ -3,20 +3,7 @@ jest.mock('bcryptjs')
 
 const { UserAlreadyRegisteredError } = require('../../../domain/errors')
 const { InsertUserUC, InsertUserUCParams } = require('../../../domain/use_case/insert_user_uc')
-const { submitUCRequest, assertNull, assertErrorType, assertHaveBeenCalled } = require('../../test_utils')
-
-const registeredUser = {
-  name: 'User',
-  email: 'user@test.com',
-  password: 'Abc123$#',
-  role: 'Customer'
-}
-const unregisteredUser = {
-  name: 'User',
-  email: 'user2@test.com',
-  password: 'Abc123$#',
-  role: 'Customer'
-}
+const { registeredUser, unregisteredUser, submitUCRequest, assertNull, assertErrorType, assertHaveBeenCalled } = require('../../test_utils')
 
 beforeAll(() => {
   bcrypt.hash.mockImplementation(() => '')

@@ -10,7 +10,7 @@ const passwordWithoutNumber = 'Abcd@#$%'
 const passwordWithoutSpecialCharacter = 'Abcd1234'
 
 describe("Validate password format", () => {
-  it("Should not return an error if the password is valid", async () => {
+  it("Should not return an error if the password format is valid", async () => {
     const validatePasswordFormatUC = makeUseCase()
     const params = makeParams({ password: validPassword })
     let error = null

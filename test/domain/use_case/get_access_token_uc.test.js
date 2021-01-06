@@ -3,13 +3,8 @@ jest.mock('jsonwebtoken')
 
 const { GetAccessTokenUC, GetAccessTokenUCParams } = require('../../../domain/use_case/get_access_token_uc')
 const { UserNotFoundError } = require('../../../domain/errors')
-const { submitUCRequest, assertEquals, assertErrorType } = require('../../test_utils')
+const { registeredUser: user, submitUCRequest, assertEquals, assertErrorType } = require('../../test_utils')
 
-const user = {
-  email: 'test@test.com',
-  id: 'USER_ID',
-  role: "Customer"
-}
 const accessToken = 'ACCESS_TOKEN'
 
 beforeAll(() => {
