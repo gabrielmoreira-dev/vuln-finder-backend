@@ -1,6 +1,9 @@
+const bcrypt = require('bcryptjs')
+jest.mock('bcryptjs')
+
 const { UserAlreadyRegisteredError } = require('../../../domain/errors')
 const { InsertUserUC, InsertUserUCParams } = require('../../../domain/use_case/insert_user_uc')
-const { submitRequest, assertNull, assertErrorType } = require('../../test_utils')
+const { submitRequest, assertNull, assertErrorType, assertHaveBeenCalled } = require('../../test_utils')
 
 const registeredUser = {
   name: 'User',
@@ -14,6 +17,10 @@ const unregisteredUser = {
   password: 'Abc123$#',
   role: 'Customer'
 }
+
+beforeAll(() => {
+  bcrypt.hash.mockImplementation(() => '')
+})
 
 describe("Insert user", () => {
   it("Should insert an user", async () => {
@@ -33,6 +40,7 @@ describe("Insert user", () => {
       errorCallback: errorCallback
     })
 
+    assertHaveBeenCalled(bcrypt.hash)
     assertNull(error)
   })
 

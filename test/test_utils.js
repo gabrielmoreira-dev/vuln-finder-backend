@@ -17,11 +17,14 @@ const assertEquals = (a, b) => expect(a).toBe(b)
 
 const assertErrorType = (error, type) => expect(error).toBeInstanceOf(type)
 
+const assertHaveBeenCalled = func => expect(func).toHaveBeenCalled()
+
 module.exports = {
   submitRequest,
   assertTrue,
   assertFalse,
   assertNull,
   assertEquals,
-  assertErrorType
+  assertErrorType,
+  assertHaveBeenCalled
 }

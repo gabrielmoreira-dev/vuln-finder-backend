@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs')
 const { UserAlreadyRegisteredError } = require('../errors')
 
 const InsertUserUC = class {
@@ -10,10 +11,11 @@ const InsertUserUC = class {
     if (user) {
       throw new UserAlreadyRegisteredError()
     }
+    const hash = await bcrypt.hash(params.password, 10)
     return this.userRepository.insertUser(
       params.name,
       params.email,
-      params.password,
+      hash,
       params.role
     )
   }
