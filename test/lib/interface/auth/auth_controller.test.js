@@ -11,7 +11,7 @@ const user = {
 }
 
 describe("Insert user", () => {
-  it("Should insert an user an return an access token", async () => {
+  it("Should insert an user and return an access token", async () => {
     const authController = makeController()
     const request = makeRequest(user)
 
@@ -40,7 +40,7 @@ describe("Insert user", () => {
 })
 
 describe("Authenticate user", () => {
-  it("Should authenticate an user an return an access token", async () => {
+  it("Should authenticate an user and return an access token", async () => {
     const authController = makeController()
     const request = makeRequest(user)
 
