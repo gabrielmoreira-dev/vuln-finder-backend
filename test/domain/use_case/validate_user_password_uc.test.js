@@ -70,7 +70,7 @@ describe("Validate user password", () => {
 
 const makeUseCase = _ => {
   const mockUserRepository = {
-    getUserByEmail: email => registeredUser.email == email ?
+    getUserWithPasswordByEmail: email => registeredUser.email == email ?
       registeredUser :
       null
   }

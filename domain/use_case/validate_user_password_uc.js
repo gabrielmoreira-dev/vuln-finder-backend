@@ -8,7 +8,7 @@ const ValidateUserPasswordUC = class {
 
   getFuture = async params => {
     const password = params.password
-    const user = await this.userRepository.getUserByEmail(params.email)
+    const user = await this.userRepository.getUserWithPasswordByEmail(params.email)
     if (!user) {
       throw new UserNotFoundError
     }
