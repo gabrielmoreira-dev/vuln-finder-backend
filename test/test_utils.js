@@ -30,6 +30,15 @@ const submitControllerRequest = async ({ func, request, errorCallback }) => {
   }
 }
 
+const submitAuthorizationRequest = async ({ func, request, errorCallback }) => {
+  try {
+    return await func(request, null, () => { })
+  }
+  catch (e) {
+    errorCallback(e)
+  }
+}
+
 const assertTrue = value => expect(value).toBeTruthy()
 
 const assertFalse = value => expect(value).toBeFalsy()
@@ -47,6 +56,7 @@ module.exports = {
   unregisteredUser,
   submitUCRequest,
   submitControllerRequest,
+  submitAuthorizationRequest,
   assertTrue,
   assertFalse,
   assertNull,
