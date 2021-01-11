@@ -18,8 +18,8 @@ const GetAccessTokenUC = class {
     })
   }
 
-  generateAccessToken = (id, role) => jwt
-    .sign({ id, role }, process.env.JWT_HASH, { expiresIn: 86400 })
+  generateAccessToken = params => jwt
+    .sign(params, process.env.JWT_HASH, { expiresIn: 86400 })
 }
 
 const GetAccessTokenUCParams = class {
