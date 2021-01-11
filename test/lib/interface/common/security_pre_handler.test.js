@@ -9,14 +9,16 @@ const accessToken = 'Bearer 1a2b3c456789'
 const invalidToken = 'Bearer 1a2b3c455555'
 const invalidFormatToken = '1a2b3c456789'
 const invalidMethodToken = 'Bearer1 1a2b3c456789'
+const next = () => {
+  return {
+    id: registeredUser.id
+  }
+}
 
 beforeAll(() => {
   jwt.verify.mockImplementation((token, _, __) => {
     if (accessToken.split(' ')[1] == token) {
-      return {
-        id: registeredUser.id,
-        role: registeredUser.role
-      }
+      return {}
     }
     else {
       throw new InvalidAccessTokenError()
@@ -26,11 +28,12 @@ beforeAll(() => {
 
 describe("Check if the user is authenticated", () => {
   it("Should check user is authenticated", async () => {
-    const req = makeAuthenticationRequest(accessToken)
+    let req = makeAuthenticationRequest(accessToken)
 
     const result = await submitAuthorizationRequest({
       func: SecurityPreHandler.checkUserIsAuthenticated,
-      request: req
+      request: req,
+      next: next
     })
 
     assertEquals(result.id, registeredUser.id)

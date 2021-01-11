@@ -1,4 +1,5 @@
 const registeredUser = {
+  id: 'REGISTERED_USER_ID',
   name: 'User',
   email: 'user@test.com',
   password: 'Abc123$#',
@@ -6,6 +7,7 @@ const registeredUser = {
 }
 
 const unregisteredUser = {
+  id: 'UNREGISTERED_USER_ID',
   name: 'User',
   email: 'user2@test.com',
   password: 'Abc123$#',
@@ -30,9 +32,9 @@ const submitControllerRequest = async ({ func, request, errorCallback }) => {
   }
 }
 
-const submitAuthorizationRequest = async ({ func, request, errorCallback }) => {
+const submitAuthorizationRequest = async ({ func, request, errorCallback, next = () => { } }) => {
   try {
-    return await func(request, null, () => { })
+    return await func(request, null, next)
   }
   catch (e) {
     errorCallback(e)
