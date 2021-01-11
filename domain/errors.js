@@ -52,6 +52,36 @@ class UserAlreadyRegisteredError extends Error {
   }
 }
 
+class AccessTokenError extends Error {
+  constructor(message) {
+    super(message)
+  }
+}
+
+class InvalidAccessTokenError extends AccessTokenError {
+  constructor() {
+    super("The provided token is invalid")
+  }
+}
+
+class NoAccessTokenProvidedError extends AccessTokenError {
+  constructor() {
+    super("No access token provided")
+  }
+}
+
+class MalformattedTokenError extends AccessTokenError {
+  constructor() {
+    super("Malformatted token")
+  }
+}
+
+class InvalidAuthenticationMethodError extends AccessTokenError {
+  constructor() {
+    super("Invalid authentication method")
+  }
+}
+
 module.exports = {
   UnauthorizedError,
   MissingRequiredParameterError,
@@ -60,5 +90,9 @@ module.exports = {
   InvalidPasswordLengthError,
   InvalidPasswordFormatError,
   UserNotFoundError,
-  UserAlreadyRegisteredError
+  UserAlreadyRegisteredError,
+  InvalidAccessTokenError,
+  NoAccessTokenProvidedError,
+  MalformattedTokenError,
+  InvalidAuthenticationMethodError
 }
