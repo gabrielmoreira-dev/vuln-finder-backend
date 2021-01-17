@@ -14,6 +14,13 @@ const unregisteredUser = {
   role: 'Customer'
 }
 
+const registeredCustomer = {
+  user: registeredUser,
+  id: 'REGISTERED_CUSTOMER_ID',
+  address: {},
+  phone: '99999999'
+}
+
 const submitUCRequest = async ({ uc, params, errorCallback }) => {
   try {
     return await uc.getFuture(params)
@@ -56,6 +63,7 @@ const assertHaveBeenCalled = func => expect(func).toHaveBeenCalled()
 module.exports = {
   registeredUser,
   unregisteredUser,
+  registeredCustomer,
   submitUCRequest,
   submitControllerRequest,
   submitAuthorizationRequest,

@@ -14,9 +14,7 @@ beforeAll(() => {
 describe("Get access token", () => {
   it("Shoult return an access token", async () => {
     const getAccessTokenUC = makeUseCase(user)
-    const params = makeParams({
-      email: user.email,
-    })
+    const params = makeParams({ email: user.email })
 
     const receivedToken = await submitUCRequest({
       uc: getAccessTokenUC,
@@ -28,9 +26,7 @@ describe("Get access token", () => {
 
   it("Should throw an user not found error", async () => {
     const getAccessTokenUC = makeUseCase(null)
-    const params = makeParams({
-      email: user.email,
-    })
+    const params = makeParams({ email: user.email })
     let error = null
     const errorCallback = e => error = e
 

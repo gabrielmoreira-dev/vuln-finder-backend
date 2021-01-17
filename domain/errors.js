@@ -82,6 +82,12 @@ class InvalidAuthenticationMethodError extends AccessTokenError {
   }
 }
 
+class CustomerNotFoundError extends Error {
+  constructor() {
+    super("User not found")
+  }
+}
+
 module.exports = {
   UnauthorizedError,
   MissingRequiredParameterError,
@@ -94,5 +100,6 @@ module.exports = {
   InvalidAccessTokenError,
   NoAccessTokenProvidedError,
   MalformattedTokenError,
-  InvalidAuthenticationMethodError
+  InvalidAuthenticationMethodError,
+  CustomerNotFoundError
 }
