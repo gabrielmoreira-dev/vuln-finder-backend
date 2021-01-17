@@ -14,12 +14,14 @@ const unregisteredUser = {
   role: 'Customer'
 }
 
-const registeredCustomer = {
-  user: registeredUser,
-  id: 'REGISTERED_CUSTOMER_ID',
-  address: {},
-  phone: '99999999'
-}
+const customerList = [
+  {
+    user: registeredUser,
+    id: 'REGISTERED_CUSTOMER_ID',
+    address: {},
+    phone: '99999999'
+  }
+]
 
 const submitUCRequest = async ({ uc, params, errorCallback }) => {
   try {
@@ -60,10 +62,12 @@ const assertErrorType = (error, type) => expect(error).toBeInstanceOf(type)
 
 const assertHaveBeenCalled = func => expect(func).toHaveBeenCalled()
 
+const assertContains = (obj, array) => expect(array).toContain(obj)
+
 module.exports = {
   registeredUser,
   unregisteredUser,
-  registeredCustomer,
+  customerList,
   submitUCRequest,
   submitControllerRequest,
   submitAuthorizationRequest,
@@ -72,5 +76,6 @@ module.exports = {
   assertNull,
   assertEquals,
   assertErrorType,
-  assertHaveBeenCalled
+  assertHaveBeenCalled,
+  assertContains
 }
