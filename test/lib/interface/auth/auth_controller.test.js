@@ -52,7 +52,7 @@ describe("Authenticate user", () => {
     assertEquals(receivedToken, accessToken)
   })
 
-  it("Should throw an missing required parameter error", async () => {
+  it("Should throw a missing required parameter error", async () => {
     const authController = makeController()
     const request = makeRequest({})
     let error = null
