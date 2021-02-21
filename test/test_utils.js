@@ -23,6 +23,16 @@ const customerList = [
   }
 ]
 
+const professionalList = [
+  {
+    user: registeredUser,
+    id: 'REGISTERED_PROFESSIONAL_ID',
+    address: {},
+    phone: '99999999',
+    price: 100.0
+  }
+]
+
 const submitUCRequest = async ({ uc, params, errorCallback }) => {
   try {
     return await uc.getFuture(params)
@@ -68,6 +78,7 @@ module.exports = {
   registeredUser,
   unregisteredUser,
   customerList,
+  professionalList,
   submitUCRequest,
   submitControllerRequest,
   submitAuthorizationRequest,

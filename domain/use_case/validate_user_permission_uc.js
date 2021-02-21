@@ -8,7 +8,7 @@ const ValidateUserPermissionUC = class {
   getFuture = async params => {
     const user = await this.userRepository.getUserByEmail(params.email)
     if (!user) {
-      throw new UserNotFoundError
+      throw new UserNotFoundError()
     }
     this.validatePermission(params.roleList, user.role)
   }
