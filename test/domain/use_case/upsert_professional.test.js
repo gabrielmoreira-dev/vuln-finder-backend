@@ -3,8 +3,8 @@ const { submitUCRequest, assertTrue } = require("../../test_utils")
 const ProfessionalBuilder = require("../../common/data_builder/professional_builder")
 const MockProfessionalRepository = require("../../common/mock/repository/mock_professional_repository")
 
-describe.only("Upsert professional", () => {
-  it("Verify if repository was called", async () => {
+describe("Upsert professional", () => {
+  it("Verifies if upsertProfessional was called", async () => {
     const upsertProfessionalUC = makeUseCase()
     const params = makeParams({
       userId: 'REGISTERED_USER_ID',
