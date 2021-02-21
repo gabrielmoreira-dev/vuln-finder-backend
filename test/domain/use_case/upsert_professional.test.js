@@ -1,24 +1,19 @@
 const { UpsertProfessionalUC, UpsertProfessionalUCParams } = require("../../../domain/use_case/upsert_professional_uc")
 const { submitUCRequest, assertTrue } = require("../../test_utils")
+const ProfessionalBuilder = require("../../common/data_builder/professional_builder")
+const MockProfessionalRepository = require("../../common/mock/repository/mock_professional_repository")
 
 describe.only("Upsert professional", () => {
   it("Verify if repository was called", async () => {
     const upsertProfessionalUC = makeUseCase()
     const params = makeParams({
       userId: 'REGISTERED_USER_ID',
-      professional: {
-        address: {},
-        phone: '99999999',
-        price: 100.0
-      }
+      professional: ProfessionalBuilder.build()
     })
 
     const _ = await submitUCRequest({
       uc: upsertProfessionalUC,
-      params: params,
-      errorCallback: (e) => {
-        console.log(e)
-      }
+      params: params
     })
 
     assertTrue(upsertProfessionalUC.professionalRepository.isUpsertProfessionalCalled)
@@ -26,12 +21,6 @@ describe.only("Upsert professional", () => {
 })
 
 const makeUseCase = _ => {
-  const MockProfessionalRepository = class {
-    isUpsertProfessionalCalled = false
-    upsertProfessional = (_, __) => {
-      this.isUpsertProfessionalCalled = true
-    }
-  }
   return new UpsertProfessionalUC({
     professionalRepository: new MockProfessionalRepository()
   })

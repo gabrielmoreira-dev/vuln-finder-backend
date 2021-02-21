@@ -1,15 +1,13 @@
 const { UpsertCustomerUC, UpsertCustomerUCParams } = require('../../../domain/use_case/upsert_customer_uc')
 const { customerList, submitUCRequest, assertContains } = require('../../test_utils')
+const CustomerBuilder = require("../../common/data_builder/customer_builder")
 
 describe("Upsert customer", () => {
   it("Should insert a costumer", async () => {
     const upsertCustomerUC = makeUseCase()
     const params = makeParams({
       userId: 'UNREGISTERED_USER_ID',
-      customer: {
-        address: {},
-        phone: '99999999'
-      }
+      customer: CustomerBuilder.build()
     })
 
     const customer = await submitUCRequest({
