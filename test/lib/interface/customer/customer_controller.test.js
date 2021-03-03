@@ -1,6 +1,6 @@
 const CustomerController = require('../../../../lib/interface/customer/customer_controller')
 const { MissingRequiredParameterError } = require('../../../../domain/errors')
-const { registeredUser, submitControllerRequest, assertEquals, assertErrorType } = require("../../../test_utils")
+const { registeredUser, submitControllerRequest, assertEquals, assertErrorType } = require("../../../common/utils")
 
 const customer = {
   customer: {

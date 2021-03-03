@@ -1,58 +1,27 @@
 const { UpsertCustomerUC, UpsertCustomerUCParams } = require('../../../domain/use_case/upsert_customer_uc')
-const { customerList, submitUCRequest, assertContains } = require('../../test_utils')
+const { submitUCRequest, assertTrue } = require('../../common/utils')
 const CustomerBuilder = require("../../common/data_builder/customer_builder")
+const CustomerRepositorySpy = require("../../common/mock/repository/customer_repository_spy")
 
 describe("Upsert customer", () => {
-  it("Should insert a costumer", async () => {
-    const upsertCustomerUC = makeUseCase()
+  it("Verifies if upsert customer was called", async () => {
+    const upsertCustomerUC = makeUseCase(false)
     const params = makeParams({
       userId: 'UNREGISTERED_USER_ID',
       customer: CustomerBuilder.build()
     })
 
-    const customer = await submitUCRequest({
+    const _ = await submitUCRequest({
       uc: upsertCustomerUC,
       params: params
     })
 
-    assertContains(customer, customerList)
-  })
-
-  it("Should update a costumer", async () => {
-    const upsertCustomerUC = makeUseCase()
-    const params = makeParams({
-      userId: 'REGISTERED_USER_ID',
-      customer: {
-        address: {},
-        phone: '99999999'
-      }
-    })
-
-    const customer = await submitUCRequest({
-      uc: upsertCustomerUC,
-      params: params
-    })
-
-    assertContains(customer, customerList)
+    assertTrue(upsertCustomerUC.customerRepository.upsertCustomerIsCalled)
   })
 })
 
-const makeUseCase = _ => {
-  const mockCustomerRepository = {
-    upsertCustomer: (userId, customer) => {
-      const index = customerList.findIndex(customer => customer.user.id === userId)
-      if (index === -1) {
-        customerList.push(customer)
-      }
-      else {
-        customerList[index] = customer
-      }
-      return customer
-    }
-  }
-  return new UpsertCustomerUC({
-    customerRepository: mockCustomerRepository
-  })
-}
+const makeUseCase = returnCustomer => new UpsertCustomerUC({
+  customerRepository: new CustomerRepositorySpy(returnCustomer)
+})
 
 const makeParams = ({ userId, customer }) => new UpsertCustomerUCParams(userId, customer)

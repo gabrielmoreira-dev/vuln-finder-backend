@@ -2,40 +2,32 @@ const bcrypt = require('bcryptjs')
 jest.mock('bcryptjs')
 
 const { ValidateUserPasswordUC, ValidateUserPasswordUCParams } = require('../../../domain/use_case/validate_user_password_uc')
-const { UserNotFoundError, InvalidPasswordError } = require('../../../domain/errors')
-const { registeredUser, unregisteredUser, submitUCRequest, assertNull, assertErrorType } = require('../../test_utils')
-
-const validPassword = registeredUser.password
-const invalidPassword = '123Abc@#'
-
-beforeAll(() => {
-  bcrypt.compare.mockImplementation((a, b) => a === b)
-})
+const { InvalidCredentialsError } = require('../../../domain/errors')
+const { submitUCRequest, assertErrorType, assertTrue } = require('../../common/utils')
+const UserRepositorySpy = require("../../common/mock/repository/user_repository_spy")
 
 describe("Validate user password", () => {
-  it("Should not return an error if the password is correct", async () => {
-    const validateUserPasswordUC = makeUseCase()
+  it("Verifies if get user by email is called", async () => {
+    bcrypt.compare.mockImplementation((_, __) => true)
+    const validateUserPasswordUC = makeUseCase(true)
     const params = makeParams({
-      email: registeredUser.email,
-      password: validPassword
+      email: "user@test.com",
+      password: "PASSWORD"
     })
-    let error = null
-    const errorCallback = e => error = e
 
     await submitUCRequest({
       uc: validateUserPasswordUC,
-      params: params,
-      errorCallback: errorCallback
+      params: params
     })
 
-    assertNull(error)
+    assertTrue(validateUserPasswordUC.userRepository.getUserWithPasswordByEmailIsCalled)
   })
 
-  it("Should return an user not found error", async () => {
-    const validateUserPasswordUC = makeUseCase()
+  it("Verifies if throw an user not found error", async () => {
+    const validateUserPasswordUC = makeUseCase(false)
     const params = makeParams({
-      email: unregisteredUser.email,
-      password: validPassword
+      email: "user@test.com",
+      password: "PASSWORD"
     })
     let error = null
     const errorCallback = e => error = e
@@ -46,14 +38,15 @@ describe("Validate user password", () => {
       errorCallback: errorCallback
     })
 
-    assertErrorType(error, UserNotFoundError)
+    assertErrorType(error, InvalidCredentialsError)
   })
 
   it("Should return an invalid password error", async () => {
-    const validateUserPasswordUC = makeUseCase()
+    bcrypt.compare.mockImplementation((_, __) => false)
+    const validateUserPasswordUC = makeUseCase(true)
     const params = makeParams({
-      email: registeredUser.email,
-      password: invalidPassword
+      email: "user@test.com",
+      password: "PASSWORD"
     })
     let error = null
     const errorCallback = e => error = e
@@ -64,19 +57,12 @@ describe("Validate user password", () => {
       errorCallback: errorCallback
     })
 
-    assertErrorType(error, InvalidPasswordError)
+    assertErrorType(error, InvalidCredentialsError)
   })
 })
 
-const makeUseCase = _ => {
-  const mockUserRepository = {
-    getUserWithPasswordByEmail: email => registeredUser.email == email ?
-      registeredUser :
-      null
-  }
-  return new ValidateUserPasswordUC({
-    userRepository: mockUserRepository
-  })
-}
+const makeUseCase = returnUser => new ValidateUserPasswordUC({
+  userRepository: new UserRepositorySpy(returnUser)
+})
 
 const makeParams = ({ email, password }) => new ValidateUserPasswordUCParams(email, password)

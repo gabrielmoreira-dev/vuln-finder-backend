@@ -1,72 +1,65 @@
 const { GetCustomerUC, GetCustomerUCParams } = require('../../../domain/use_case/get_customer_uc')
-const { CustomerNotFoundError, MissingRequiredParameterError } = require('../../../domain/errors')
-const { customerList, submitUCRequest, assertEquals, assertErrorType } = require('../../test_utils')
+const { MissingRequiredParameterError, CustomerNotFoundError } = require('../../../domain/errors')
+const { submitUCRequest, assertTrue, assertErrorType } = require('../../common/utils')
+const CustomerRepositorySpy = require("../../common/mock/repository/customer_repository_spy")
 
 describe("Get customer", () => {
-  it("Should return a customer by id", async () => {
-    const getCustomerUC = makeUseCase(customerList[0])
-    const params = makeParams({ id: customerList[0].id })
+  it("Verifies if get customer by id is called", async () => {
+    const getCustomerUC = makeUseCase(true)
+    const params = makeParams({ id: "CUSTOMER_ID" })
 
-    const customer = await submitUCRequest({
+    const _ = await submitUCRequest({
       uc: getCustomerUC,
       params: params
     })
 
-    assertEquals(customer, customerList[0])
+    assertTrue(getCustomerUC.customerRepository.getCustomerByIdIsCalled)
   })
 
-  it("Should return a customer by user id", async () => {
-    const getCustomerUC = makeUseCase(customerList[0])
-    const params = makeParams({ userId: customerList[0].user.id })
+  it("Verifies if get customer by user id is called", async () => {
+    const getCustomerUC = makeUseCase(true)
+    const params = makeParams({ userId: "USER_ID" })
 
-    const customer = await submitUCRequest({
+    const _ = await submitUCRequest({
       uc: getCustomerUC,
       params: params
     })
 
-    assertEquals(customer, customerList[0])
+    assertTrue(getCustomerUC.customerRepository.getCustomerByUserIdIsCalled)
   })
 
-  it("Should throw a customer not found error", async () => {
-    const getCustomerUC = makeUseCase(customerList[0])
-    const params = makeParams({ userId: 'UNREGISTERED_USER_ID' })
-    let error = null
-    const errorCallback = e => error = e
-
-    const customer = await submitUCRequest({
-      uc: getCustomerUC,
-      params: params,
-      errorCallback: errorCallback
-    })
-
-    assertErrorType(error, CustomerNotFoundError)
-  })
-
-  it("Should throw an missing required parameters error", async () => {
-    const getCustomerUC = makeUseCase(customerList[0])
+  it("Verifies if throws a missing parameter error", async () => {
+    const getCustomerUC = makeUseCase(true)
     const params = makeParams({})
     let error = null
-    const errorCallback = e => error = e
 
-    const customer = await submitUCRequest({
+    const _ = await submitUCRequest({
       uc: getCustomerUC,
       params: params,
-      errorCallback: errorCallback
+      errorCallback: (e) => error = e
     })
 
     assertErrorType(error, MissingRequiredParameterError)
   })
+
+  it("Verifies if throws a customer not found error", async () => {
+    const getCustomerUC = makeUseCase(false)
+    const params = makeParams({ userId: "USER_ID" })
+    let error = null
+
+    const _ = await submitUCRequest({
+      uc: getCustomerUC,
+      params: params,
+      errorCallback: (e) => error = e
+    })
+
+    assertErrorType(error, CustomerNotFoundError)
+  })
 })
 
-const makeUseCase = customer => {
-  const mockCustomerRepository = {
-    getCustomerById: id => customer.id === id ? customer : null,
+const makeUseCase = returnCustomer => new GetCustomerUC({
+  customerRepository: new CustomerRepositorySpy(returnCustomer)
+})
 
-    getCustomerByUserId: userId => customer.user.id === userId ? customer : null
-  }
-  return new GetCustomerUC({
-    customerRepository: mockCustomerRepository
-  })
-}
 
 const makeParams = ({ id, userId }) => new GetCustomerUCParams({ id, userId })

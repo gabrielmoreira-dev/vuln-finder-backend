@@ -1,4 +1,4 @@
-const { UserNotFoundError, UnauthorizedError } = require('../errors')
+const { InvalidCredentialsError, UnauthorizedError } = require('../errors')
 
 const ValidateUserPermissionUC = class {
   constructor({ userRepository }) {
@@ -8,7 +8,7 @@ const ValidateUserPermissionUC = class {
   getFuture = async params => {
     const user = await this.userRepository.getUserByEmail(params.email)
     if (!user) {
-      throw new UserNotFoundError()
+      throw new InvalidCredentialsError()
     }
     this.validatePermission(params.roleList, user.role)
   }

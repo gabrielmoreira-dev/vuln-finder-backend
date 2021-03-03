@@ -1,6 +1,6 @@
 const { ValidatePasswordFormatUC, ValidatePasswordFormatUCParams } = require('../../../domain/use_case/validate_password_format_uc')
-const { InvalidPasswordLengthError, InvalidPasswordFormatError } = require('../../../domain/errors')
-const { submitUCRequest, assertErrorType, assertNull } = require('../../test_utils')
+const { InvalidCredentialsError } = require('../../../domain/errors')
+const { submitUCRequest, assertErrorType, assertNull } = require('../../common/utils')
 
 const validPassword = 'Abc123@#'
 const shortPassword = 'Abc123@'
@@ -37,7 +37,7 @@ describe("Validate password format", () => {
       errorCallback: errorCallback
     })
 
-    assertErrorType(error, InvalidPasswordLengthError)
+    assertErrorType(error, InvalidCredentialsError)
   })
 
   it("Should return an error if the passsword does not contain uppercase letter", async () => {
@@ -52,7 +52,7 @@ describe("Validate password format", () => {
       errorCallback: errorCallback
     })
 
-    assertErrorType(error, InvalidPasswordFormatError)
+    assertErrorType(error, InvalidCredentialsError)
   })
 
   it("Should return an error if the passsword does not contain lowercase letter", async () => {
@@ -67,7 +67,7 @@ describe("Validate password format", () => {
       errorCallback: errorCallback
     })
 
-    assertErrorType(error, InvalidPasswordFormatError)
+    assertErrorType(error, InvalidCredentialsError)
   })
 
   it("Should return an error if the passsword does not contain number", async () => {
@@ -82,7 +82,7 @@ describe("Validate password format", () => {
       errorCallback: errorCallback
     })
 
-    assertErrorType(error, InvalidPasswordFormatError)
+    assertErrorType(error, InvalidCredentialsError)
   })
 
   it("Should return an error if the passsword does not contain special characters", async () => {
@@ -97,7 +97,7 @@ describe("Validate password format", () => {
       errorCallback: errorCallback
     })
 
-    assertErrorType(error, InvalidPasswordFormatError)
+    assertErrorType(error, InvalidCredentialsError)
   })
 })
 

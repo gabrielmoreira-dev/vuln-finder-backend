@@ -1,4 +1,4 @@
-const { InvalidPasswordLengthError, InvalidPasswordFormatError } = require('../../domain/errors')
+const { InvalidCredentialsError } = require('../../domain/errors')
 
 const ValidatePasswordFormatUC = class {
   getFuture = params => {
@@ -10,14 +10,14 @@ const ValidatePasswordFormatUC = class {
   validatePasswordLength = password => {
     const minLength = 8
     if (password.length < minLength) {
-      throw new InvalidPasswordLengthError()
+      throw new InvalidCredentialsError()
     }
   }
 
   validatePasswordComposition = password => {
     const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}/
     if (!password.match(regex)) {
-      throw new InvalidPasswordFormatError()
+      throw new InvalidCredentialsError()
     }
   }
 }

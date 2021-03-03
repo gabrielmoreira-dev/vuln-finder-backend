@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 
-const { UserNotFoundError } = require('../errors')
+const { InvalidCredentialsError } = require('../errors')
 
 const GetAccessTokenUC = class {
   constructor({ userRepository }) {
@@ -10,7 +10,7 @@ const GetAccessTokenUC = class {
   getFuture = async params => {
     const user = await this.userRepository.getUserByEmail(params.email)
     if (!user) {
-      throw new UserNotFoundError()
+      throw new InvalidCredentialsError()
     }
     return this.generateAccessToken({
       id: user.id,

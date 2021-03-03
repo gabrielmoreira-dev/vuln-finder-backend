@@ -2,51 +2,44 @@ const jwt = require('jsonwebtoken')
 jest.mock('jsonwebtoken')
 
 const { GetAccessTokenUC, GetAccessTokenUCParams } = require('../../../domain/use_case/get_access_token_uc')
-const { UserNotFoundError } = require('../../../domain/errors')
-const { registeredUser: user, submitUCRequest, assertEquals, assertErrorType } = require('../../test_utils')
-
-const accessToken = 'ACCESS_TOKEN'
+const { InvalidCredentialsError } = require('../../../domain/errors')
+const { submitUCRequest, assertTrue, assertErrorType } = require('../../common/utils')
+const UserRepositorySpy = require("../../common/mock/repository/user_repository_spy")
 
 beforeAll(() => {
-  jwt.sign.mockImplementation(() => accessToken)
+  jwt.sign.mockImplementation(() => { })
 })
 
 describe("Get access token", () => {
-  it("Shoult return an access token", async () => {
-    const getAccessTokenUC = makeUseCase(user)
-    const params = makeParams({ email: user.email })
+  it("Verifies if get user is called", async () => {
+    const getAccessTokenUC = makeUseCase(true)
+    const params = makeParams({ email: "user@test.com" })
 
-    const receivedToken = await submitUCRequest({
+    const _ = await submitUCRequest({
       uc: getAccessTokenUC,
       params: params
     })
 
-    assertEquals(receivedToken, accessToken)
+    assertTrue(getAccessTokenUC.userRepository.getUserByEmailIsCalled)
   })
 
-  it("Should throw an user not found error", async () => {
-    const getAccessTokenUC = makeUseCase(null)
-    const params = makeParams({ email: user.email })
+  it("Verifies if throw an user not found error", async () => {
+    const getAccessTokenUC = makeUseCase(false)
+    const params = makeParams({ email: "user@test.com" })
     let error = null
-    const errorCallback = e => error = e
 
-    const receivedToken = await submitUCRequest({
+    const _ = await submitUCRequest({
       uc: getAccessTokenUC,
       params: params,
-      errorCallback: errorCallback
+      errorCallback: (e) => error = e
     })
 
-    assertErrorType(error, UserNotFoundError)
+    assertErrorType(error, InvalidCredentialsError)
   })
 })
 
-const makeUseCase = user => {
-  const mockUserRepository = {
-    getUserByEmail: _ => user
-  }
-  return new GetAccessTokenUC({
-    userRepository: mockUserRepository
-  })
-}
+const makeUseCase = returnUser => new GetAccessTokenUC({
+  userRepository: new UserRepositorySpy(returnUser)
+})
 
 const makeParams = ({ email }) => new GetAccessTokenUCParams(email)

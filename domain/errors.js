@@ -10,39 +10,9 @@ class MissingRequiredParameterError extends Error {
   }
 }
 
-class InvalidEmailFormatError extends Error {
+class InvalidCredentialsError extends Error {
   constructor() {
-    super("The provided email is invalid")
-  }
-}
-
-class InvalidPasswordError extends Error {
-  constructor() {
-    super("The password is invalid")
-  }
-}
-
-class PasswordFormatError extends Error {
-  constructor(message) {
-    super(message)
-  }
-}
-
-class InvalidPasswordLengthError extends PasswordFormatError {
-  constructor() {
-    super("The password must contain at least 8 characters")
-  }
-}
-
-class InvalidPasswordFormatError extends PasswordFormatError {
-  constructor() {
-    super("The password must contain an uppercase letter, a downcase letter, a number and a special character ")
-  }
-}
-
-class UserNotFoundError extends Error {
-  constructor() {
-    super("User not found")
+    super("Invalid credentials")
   }
 }
 
@@ -91,11 +61,7 @@ class CustomerNotFoundError extends Error {
 module.exports = {
   UnauthorizedError,
   MissingRequiredParameterError,
-  InvalidEmailFormatError,
-  InvalidPasswordError,
-  InvalidPasswordLengthError,
-  InvalidPasswordFormatError,
-  UserNotFoundError,
+  InvalidCredentialsError,
   UserAlreadyRegisteredError,
   InvalidAccessTokenError,
   NoAccessTokenProvidedError,

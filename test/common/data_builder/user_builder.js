@@ -1,8 +1,8 @@
 module.exports = class {
-  name = null
-  email = null
-  password = null
-  role = null
+  static name = null
+  static email = null
+  static password = null
+  static role = null
 
   static withName = name => {
     this.name = name

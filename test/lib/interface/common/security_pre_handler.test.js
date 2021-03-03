@@ -3,7 +3,7 @@ jest.mock('jsonwebtoken')
 
 const SecurityPreHandler = require('../../../../lib/interface/common/security_pre_handler')
 const { InvalidAccessTokenError, NoAccessTokenProvidedError, MalformattedTokenError, InvalidAuthenticationMethodError, UnauthorizedError } = require('../../../../domain/errors')
-const { registeredUser, assertEquals, assertErrorType, assertNull, submitAuthorizationRequest } = require('../../../test_utils')
+const { registeredUser, assertEquals, assertErrorType, assertNull, submitAuthorizationRequest } = require('../../../common/utils')
 
 const accessToken = 'Bearer 1a2b3c456789'
 const invalidToken = 'Bearer 1a2b3c455555'

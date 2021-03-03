@@ -1,6 +1,6 @@
 const { MissingRequiredParameterError } = require('../../../../domain/errors')
 const AuthController = require('../../../../lib/interface/auth/auth_controller')
-const { assertEquals, submitControllerRequest, assertErrorType } = require('../../../test_utils')
+const { assertEquals, submitControllerRequest, assertErrorType } = require('../../../common/utils')
 
 const accessToken = 'ACCESS_TOKEN'
 const user = {

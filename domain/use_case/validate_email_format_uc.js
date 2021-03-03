@@ -1,4 +1,4 @@
-const { InvalidEmailFormatError } = require('../errors')
+const { InvalidCredentialsError } = require('../errors')
 
 const ValidateEmailFormatUC = class {
   getFuture = params => {
@@ -9,7 +9,7 @@ const ValidateEmailFormatUC = class {
   validateEmailComposition = email => {
     const regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
     if (!email.match(regex)) {
-      throw new InvalidEmailFormatError()
+      throw new InvalidCredentialsError()
     }
   }
 }
