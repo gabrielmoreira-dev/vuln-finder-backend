@@ -28,6 +28,7 @@ module.exports = class extends ProfessionalDataRepository {
 
   getProfessionalByUserId = _ => {
     this.getProfessionalByUserIdIsCalled = true
+    return this.returnProfessional ? this.professional : null
   }
 
   getProfessionalList = () => {
@@ -35,7 +36,7 @@ module.exports = class extends ProfessionalDataRepository {
     return this.returnProfessional ? this.professional : null
   }
 
-  getProfessionalListByCity = () => {
+  getProfessionalListByCity = _ => {
     this.getProfessionalListByCityIsCalled = true
     return this.returnProfessional ? this.professional : null
   }

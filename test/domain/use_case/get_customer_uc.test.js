@@ -61,5 +61,4 @@ const makeUseCase = returnCustomer => new GetCustomerUC({
   customerRepository: new CustomerRepositorySpy(returnCustomer)
 })
 
-
 const makeParams = ({ id, userId }) => new GetCustomerUCParams({ id, userId })
