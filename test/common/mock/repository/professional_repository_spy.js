@@ -33,11 +33,11 @@ module.exports = class extends ProfessionalDataRepository {
 
   getProfessionalList = () => {
     this.getProfessionalListIsCalled = true
-    return this.returnProfessional ? this.professional : null
+    return this.returnProfessional ? [this.professional] : null
   }
 
   getProfessionalListByCity = _ => {
     this.getProfessionalListByCityIsCalled = true
-    return this.returnProfessional ? this.professional : null
+    return this.returnProfessional ? [this.professional] : null
   }
 }
