@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 const ProfessionalDataRepository = require("../../../../domain/data_repository/professional_data_repository")
 const ProfessionalBuilder = require("../../data_builder/professional_builder")
 

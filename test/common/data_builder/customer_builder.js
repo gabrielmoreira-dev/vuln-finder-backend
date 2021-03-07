@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 module.exports = class {
   address = null
   phone = null
@@ -13,9 +15,14 @@ module.exports = class {
   }
 
   static build = _ => {
-    return {
+    const customer = {
       address: this.address,
       phone: this.phone
     }
+
+    this.address = null
+    this.phone = null
+
+    return customer
   }
 }

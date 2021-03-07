@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 module.exports = class {
   summary = null
   price = null
@@ -25,11 +27,18 @@ module.exports = class {
   }
 
   static build = _ => {
-    return {
+    const professional = {
       summary: this.summary,
       price: this.price,
       address: this.address,
       phone: this.phone
     }
+
+    this.summary = null
+    this.price = null
+    this.address = null
+    this.phone = null
+
+    return professional
   }
 }

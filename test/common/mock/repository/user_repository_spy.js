@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 const UserDataRepository = require("../../../../domain/data_repository/user_data_repository")
 const UserBuilder = require("../../data_builder/user_builder")
 

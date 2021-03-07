@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 const CustomerDataRepository = require("../../../../domain/data_repository/customer_data_repository")
 const CustomerBuilder = require("../../data_builder/customer_builder")
 

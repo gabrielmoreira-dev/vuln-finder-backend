@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 module.exports = class {
   static name = null
   static email = null
@@ -25,11 +27,18 @@ module.exports = class {
   }
 
   static build = _ => {
-    return {
+    const user = {
       name: this.name,
       email: this.email,
       password: this.password,
       role: this.role
     }
+
+    this.name = null
+    this.email = null
+    this.password = null
+    this.role = null
+
+    return user
   }
 }

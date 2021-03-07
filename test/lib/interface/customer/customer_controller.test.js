@@ -1,125 +1,87 @@
 const CustomerController = require('../../../../lib/interface/customer/customer_controller')
 const { MissingRequiredParameterError } = require('../../../../domain/errors')
-const { registeredUser, submitControllerRequest, assertEquals, assertErrorType } = require("../../../common/utils")
+const { makeRequest, assertTrue, assertErrorType } = require("../../../common/utils")
+const UseCaseSpy = require("../../../common/mock/use_case_spy")
+const CustomerBuilder = require("../../../common/data_builder/customer_builder")
 
-const customer = {
-  customer: {
-    address: {},
-    phone: '99999999'
-  }
-}
+const customerController = new CustomerController({
+  upsertCustomerUC: new UseCaseSpy(),
+  getCustomerUC: new UseCaseSpy()
+})
 
 describe("Upsert customer", () => {
-  it("Should update a customer", async () => {
-    const customerController = makeController(customer)
-    const request = makeRequest({
-      userId: registeredUser.id,
-      body: customer
-    })
+  it("Verifies if upsert customer uc is called", async () => {
+    const userId = "USER_ID"
+    const customer = CustomerBuilder.build()
 
-    const result = await submitControllerRequest({
-      func: customerController.upsertCustomer,
-      request: request
-    })
+    const req = makeRequest({ userId, body: customer })
+    await customerController.upsertCustomer(req)
 
-    assertEquals(result, customer)
+    assertTrue(customerController.upsertCustomerUC.useCaseIsCalled)
   })
 
-  it("Should throw a missing required parameter error", async () => {
-    const customerController = makeController(customer)
-    const request = makeRequest({})
-    let error = null
-    const errorCallback = e => error = e
+  it("Verifies if throws a missing parameter error", async () => {
+    const customer = CustomerBuilder.build()
+    let error
 
-    const result = await submitControllerRequest({
-      func: customerController.upsertCustomer,
-      request: request,
-      errorCallback: errorCallback
-    })
+    const req = makeRequest({ body: customer })
+    try {
+      await customerController.upsertCustomer(req)
+    }
+    catch (e) {
+      error = e
+    }
 
     assertErrorType(error, MissingRequiredParameterError)
   })
 })
 
 describe("Get customer", () => {
-  it('Should return a customer', async () => {
-    const customerController = makeController(customer)
-    const request = makeRequest({ userId: registeredUser.id })
+  it("Verifies if get customer uc is called", async () => {
+    const userId = "USER_ID"
 
-    const result = await submitControllerRequest({
-      func: customerController.getCustomer,
-      request: request
-    })
+    const req = makeRequest({ userId })
+    await customerController.getCustomer(req)
 
-    assertEquals(result, customer)
+    assertTrue(customerController.getCustomerUC.useCaseIsCalled)
   })
 
-  it("Should throw a missing required parameter error", async () => {
-    const customerController = makeController(customer)
-    const request = makeRequest({})
-    let error = null
-    const errorCallback = e => error = e
+  it("Verifies if throws a missing parameter error", async () => {
+    let error
 
-    const result = await submitControllerRequest({
-      func: customerController.getCustomer,
-      request: request,
-      errorCallback: errorCallback
-    })
+    const req = makeRequest({})
+    try {
+      await customerController.getCustomer(req)
+    }
+    catch (e) {
+      error = e
+    }
 
     assertErrorType(error, MissingRequiredParameterError)
   })
 })
 
 describe("Get customer by id", () => {
-  it('Should return a customer', async () => {
-    const customerController = makeController(customer)
-    const request = makeRequest({ id: 'CUSTOMER_ID' })
+  it("Verifies if get customer uc is called", async () => {
+    const id = "USER_ID"
 
-    const result = await submitControllerRequest({
-      func: customerController.getCustomerById,
-      request: request
-    })
+    const req = makeRequest({ id })
+    await customerController.getCustomerById(req)
 
-    assertEquals(result, customer)
+    assertTrue(customerController.getCustomerUC.useCaseIsCalled)
   })
 
-  it("Should throw a missing required parameter error", async () => {
-    const customerController = makeController(customer)
-    const request = makeRequest({})
-    let error = null
-    const errorCallback = e => error = e
+  it("Verifies if throws a missing parameter error", async () => {
+    let error
 
-    const result = await submitControllerRequest({
-      func: customerController.getCustomerById,
-      request: request,
-      errorCallback: errorCallback
-    })
+    const req = makeRequest({})
+    try {
+      await customerController.getCustomerById(req)
+    }
+    catch (e) {
+      error = e
+    }
 
     assertErrorType(error, MissingRequiredParameterError)
   })
 })
-
-const makeController = customer => {
-  const mockUpsertCustomerUC = {
-    getFuture: _ => customer
-  }
-  const mockGetCustomerUC = {
-    getFuture: _ => customer
-  }
-  return new CustomerController({
-    upsertCustomerUC: mockUpsertCustomerUC,
-    getCustomerUC: mockGetCustomerUC
-  })
-}
-
-const makeRequest = ({ userId, id, body }) => {
-  return {
-    user: {
-      id: userId
-    },
-    params: {
-      id: id
-    },
-    body: body
-  }
-}

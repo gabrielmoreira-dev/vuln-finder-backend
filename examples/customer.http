@@ -1,5 +1,5 @@
 # @name upsertCustomer
-POST {{baseUrl}}/customers
+POST {{baseUrl}}/customers/profile
 Content-Type: application/json
 Authorization: Bearer {{authUser.response.body.accessToken}}
 
@@ -17,14 +17,14 @@ Authorization: Bearer {{authUser.response.body.accessToken}}
 ###
 
 # @name getCustomer
-GET {{baseUrl}}/customers
+GET {{baseUrl}}/customers/profile
 Content-Type: application/json
 Authorization: Bearer {{authUser.response.body.accessToken}}
 ###
 
 # @name getCustomerById
-@customerId = 5fe6c314e64caff4fd4bd6c3
-GET {{baseUrl}}/customers/{{customerId}}
+@customerId = 60442dd8a08bae23b1174f22
+GET {{baseUrl}}/customers/profile/{{customerId}}
 Content-Type: application/json
 Authorization: Bearer {{authUser.response.body.accessToken}}
 ###
@@ -46,7 +46,7 @@ Content-Type: application/json
 
 {
     "email": "professional@gmail.com",
-    "password": "12345678",
+    "password": "Abc123@#",
     "role": "Professional"
 }
 ###

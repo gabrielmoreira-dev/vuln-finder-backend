@@ -24,4 +24,4 @@ const makeUseCase = returnCustomer => new UpsertCustomerUC({
   customerRepository: new CustomerRepositorySpy(returnCustomer)
 })
 
-const makeParams = ({ userId, customer }) => new UpsertCustomerUCParams(userId, customer)
+const makeParams = ({ userId, customer }) => new UpsertCustomerUCParams({ userId, customer })

@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 const registeredUser = {
   id: 'REGISTERED_USER_ID',
   name: 'User',
@@ -32,6 +34,22 @@ const professionalList = [
     price: 100.0
   }
 ]
+
+const makeRequest = ({ token, userId, id, role, body }) => {
+  return {
+    headers: {
+      authorization: token
+    },
+    user: {
+      id: userId,
+      role: role
+    },
+    params: {
+      id: id
+    },
+    body: body
+  }
+}
 
 const submitUCRequest = async ({ uc, params, errorCallback }) => {
   try {
@@ -79,6 +97,7 @@ module.exports = {
   unregisteredUser,
   customerList,
   professionalList,
+  makeRequest,
   submitUCRequest,
   submitControllerRequest,
   submitAuthorizationRequest,

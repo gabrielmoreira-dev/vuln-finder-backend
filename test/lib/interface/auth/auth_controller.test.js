@@ -1,102 +1,87 @@
 const { MissingRequiredParameterError } = require('../../../../domain/errors')
 const AuthController = require('../../../../lib/interface/auth/auth_controller')
-const { assertEquals, submitControllerRequest, assertErrorType } = require('../../../common/utils')
+const { makeRequest, assertErrorType, assertTrue } = require('../../../common/utils')
+const UseCaseSpy = require("../../../common/mock/use_case_spy")
+const UserBuilder = require("../../../common/data_builder/user_builder")
 
-const accessToken = 'ACCESS_TOKEN'
-const user = {
-  name: 'User',
-  email: 'user@test.com',
-  password: 'Abc123$#',
-  role: 'Customer'
-}
+let authController
+
+beforeAll(() => {
+  authController = new AuthController({
+    getAccessTokenUC: new UseCaseSpy(),
+    insertUserUC: new UseCaseSpy(),
+    validateEmailFormatUC: new UseCaseSpy(),
+    validatePasswordFormatUC: new UseCaseSpy(),
+    validateUserPasswordUC: new UseCaseSpy(),
+    validateUserPermissionUC: new UseCaseSpy()
+  })
+})
 
 describe("Insert user", () => {
-  it("Should insert an user and return an access token", async () => {
-    const authController = makeController()
-    const request = makeRequest(user)
+  it("Verifies if use cases are called", async () => {
+    const user = UserBuilder
+      .withName("User")
+      .withEmail("user@user.com")
+      .withPassword("PASSWORD")
+      .withRole("Customer")
+      .build()
 
-    const receivedToken = await submitControllerRequest({
-      func: authController.registerUser,
-      request: request
-    })
+    const req = makeRequest({ body: user })
+    await authController.registerUser(req)
 
-    assertEquals(receivedToken, accessToken)
+    assertTrue(authController.validateEmailFormatUC.useCaseIsCalled)
+    assertTrue(authController.validatePasswordFormatUC.useCaseIsCalled)
+    assertTrue(authController.insertUserUC.useCaseIsCalled)
+    assertTrue(authController.getAccessTokenUC.useCaseIsCalled)
   })
 
-  it("Should throw an missing required parameter error", async () => {
-    const authController = makeController()
-    const request = makeRequest({})
-    let error = null
-    const errorCallback = e => error = e
+  it("Verifies if throws a missing parameters error", async () => {
+    const user = UserBuilder.build()
+    let error
 
-    const receivedToken = await submitControllerRequest({
-      func: authController.registerUser,
-      request: request,
-      errorCallback: errorCallback
-    })
+    try {
+      const req = makeRequest({ body: user })
+      await authController.registerUser(req)
+    }
+    catch (e) {
+      error = e
+    }
 
     assertErrorType(error, MissingRequiredParameterError)
   })
 })
 
 describe("Authenticate user", () => {
-  it("Should authenticate an user and return an access token", async () => {
-    const authController = makeController()
-    const request = makeRequest(user)
+  it("Verifies if use cases are called", async () => {
 
-    const receivedToken = await submitControllerRequest({
-      func: authController.authenticateUser,
-      request: request
-    })
+    const user = UserBuilder
+      .withEmail("user@user.com")
+      .withPassword("PASSWORD")
+      .withRole("Customer")
+      .build()
 
-    assertEquals(receivedToken, accessToken)
+    const req = makeRequest({ body: user })
+    await authController.authenticateUser(req)
+
+    assertTrue(authController.validateEmailFormatUC.useCaseIsCalled)
+    assertTrue(authController.validatePasswordFormatUC.useCaseIsCalled)
+    assertTrue(authController.validateUserPermissionUC.useCaseIsCalled)
+    assertTrue(authController.validateUserPasswordUC.useCaseIsCalled)
+    assertTrue(authController.getAccessTokenUC.useCaseIsCalled)
   })
 
-  it("Should throw a missing required parameter error", async () => {
-    const authController = makeController()
-    const request = makeRequest({})
-    let error = null
-    const errorCallback = e => error = e
+  it("Verifies if throws a missing parameters error", async () => {
+    const user = UserBuilder.build()
+    let error
 
-    const receivedToken = await submitControllerRequest({
-      func: authController.authenticateUser,
-      request: request,
-      errorCallback: errorCallback
-    })
+    try {
+      const req = makeRequest({ body: user })
+      await authController.authenticateUser(req)
+    }
+    catch (e) {
+      error = e
+    }
 
     assertErrorType(error, MissingRequiredParameterError)
   })
 })
-
-const makeController = _ => {
-  const mockGetAccessTokenUC = {
-    getFuture: _ => accessToken
-  }
-  const mockInsertUserUC = {
-    getFuture: _ => { }
-  }
-  const mockValidateEmailFormatUC = {
-    getFuture: _ => { }
-  }
-  const mockValidatePasswordFormatUC = {
-    getFuture: _ => { }
-  }
-  const mockValidateUserPasswordUC = {
-    getFuture: _ => { }
-  }
-  const mockValidateUserPermissionUC = {
-    getFuture: _ => { }
-  }
-  return new AuthController({
-    getAccessTokenUC: mockGetAccessTokenUC,
-    insertUserUC: mockInsertUserUC,
-    validateEmailFormatUC: mockValidateEmailFormatUC,
-    validatePasswordFormatUC: mockValidatePasswordFormatUC,
-    validateUserPasswordUC: mockValidateUserPasswordUC,
-    validateUserPermissionUC: mockValidateUserPermissionUC
-  })
-}
-
-const makeRequest = body => {
-  return { body }
-}

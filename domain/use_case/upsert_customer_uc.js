@@ -8,7 +8,7 @@ const UpsertCustomerUC = class {
 }
 
 const UpsertCustomerUCParams = class {
-  constructor(userId, customer) {
+  constructor({ userId, customer }) {
     this.userId = userId
     this.customer = customer
   }
