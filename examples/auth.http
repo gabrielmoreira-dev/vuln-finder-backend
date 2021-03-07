@@ -4,7 +4,7 @@ Content-Type: application/json
 {
   "name": "Customer test",
   "email": "customer@gmail.com",
-  "password": "12345678",
+  "password": "Abc123@#",
   "role": "Customer" 
 }
 ###
@@ -14,7 +14,7 @@ Content-Type: application/json
 
 {
   "email": "customer@gmail.com",
-  "password": "12345678",
+  "password": "Abc123@#",
   "role": "Customer" 
 }
 ###

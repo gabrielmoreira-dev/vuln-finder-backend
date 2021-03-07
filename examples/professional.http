@@ -1,7 +1,7 @@
 # @name upsertProfessional
-POST {{baseUrl}}/professionals
+POST {{baseUrl}}/professionals/profile
 Content-Type: application/json
-Authorization: Bearer {{authUser.response.body.token}}
+Authorization: Bearer {{authUser.response.body.accessToken}}
 
 {
   "summary": "summary",
@@ -22,20 +22,20 @@ Authorization: Bearer {{authUser.response.body.token}}
 @city = Itajuba
 GET {{baseUrl}}/professionals?city={{city}}
 Content-Type: application/json
-Authorization: Bearer {{authUser.response.body.token}}
+Authorization: Bearer {{authUser.response.body.accessToken}}
 ###
 
 # @name getProfessional
 GET {{baseUrl}}/professionals/profile
 Content-Type: application/json
-Authorization: Bearer {{authUser.response.body.token}}
+Authorization: Bearer {{authUser.response.body.accessToken}}
 ###
 
 # @name getProfessionalById
 @professionalId = 5fe6c350e64caff4fd4bee62
-GET {{baseUrl}}/professionals/{{professionalId}}
+GET {{baseUrl}}/professionals/profile/{{professionalId}}
 Content-Type: application/json
-Authorization: Bearer {{authUser.response.body.token}}
+Authorization: Bearer {{authUser.response.body.accessToken}}
 ###
 
 # @name authUser
@@ -44,7 +44,7 @@ Content-Type: application/json
 
 {
     "email": "professional@gmail.com",
-    "password": "12345678",
+    "password": "Abc123@#",
     "role": "Professional"
 }
 ###
@@ -55,7 +55,7 @@ Content-Type: application/json
 
 {
     "email": "customer@gmail.com",
-    "password": "12345678",
+    "password": "Abc123@#",
     "role": "Customer"
 }
 ###

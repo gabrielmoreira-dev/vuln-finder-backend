@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --testEnvironment=node --detectOpenHandles --forceExit",
-    "dev": "nodemon src/index"
+    "test": "jest --testEnvironment=node --coverage --detectOpenHandles --forceExit",
+    "dev": "nodemon lib/index"
   },
   "repository": {
     "type": "git",
