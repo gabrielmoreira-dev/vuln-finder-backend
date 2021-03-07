@@ -8,7 +8,7 @@ const UpsertProfessionalUC = class {
 }
 
 const UpsertProfessionalUCParams = class {
-  constructor(userId, professional) {
+  constructor({ userId, professional }) {
     this.userId = userId
     this.professional = professional
   }

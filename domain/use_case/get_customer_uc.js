@@ -8,10 +8,10 @@ const GetCustomerUC = class {
   getFuture = async params => {
     let customer
     if (params.id) {
-      customer = this.customerRepository.getCustomerById(params.id)
+      customer = await this.customerRepository.getCustomerById(params.id)
     }
     else if (params.userId) {
-      customer = this.customerRepository.getCustomerByUserId(params.userId)
+      customer = await this.customerRepository.getCustomerByUserId(params.userId)
     }
     else {
       throw new MissingRequiredParameterError()

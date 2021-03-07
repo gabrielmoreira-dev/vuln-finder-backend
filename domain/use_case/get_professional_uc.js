@@ -8,10 +8,10 @@ const GetProfessionalUC = class {
   getFuture = async params => {
     let professional
     if (params.id) {
-      professional = this.professionalRepository.getProfessionalById(params.id)
+      professional = await this.professionalRepository.getProfessionalById(params.id)
     }
     else if (params.userId) {
-      professional = this.professionalRepository.getProfessionalByUserId(params.userId)
+      professional = await this.professionalRepository.getProfessionalByUserId(params.userId)
     }
     else {
       throw new MissingRequiredParameterError()
