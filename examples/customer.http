@@ -1,0 +1,52 @@
+# @name upsertCustomer
+POST {{baseUrl}}/customers/profile
+Content-Type: application/json
+Authorization: Bearer {{authUser.response.body.accessToken}}
+
+{
+  "address": {
+    "cep": "37500000",
+    "street": "BPS",
+    "number": 1,
+    "district": "Cruzeiro",
+    "city": "Itajuba",
+    "state": "MG"
+  },
+  "phone": "11999999999"
+}
+###
+
+# @name getCustomer
+GET {{baseUrl}}/customers/profile
+Content-Type: application/json
+Authorization: Bearer {{authUser.response.body.accessToken}}
+###
+
+# @name getCustomerById
+@customerId = 60442dd8a08bae23b1174f22
+GET {{baseUrl}}/customers/profile/{{customerId}}
+Content-Type: application/json
+Authorization: Bearer {{authUser.response.body.accessToken}}
+###
+
+# @name authUser
+POST  {{baseUrl}}/auth/authenticate
+Content-Type: application/json
+
+{
+    "email": "customer@gmail.com",
+    "password": "Abc123@#",
+    "role": "Customer"
+}
+###
+
+# @name authUser
+POST  {{baseUrl}}/auth/authenticate
+Content-Type: application/json
+
+{
+    "email": "professional@gmail.com",
+    "password": "Abc123@#",
+    "role": "Professional"
+}
+###

@@ -1,0 +1,20 @@
+POST {{baseUrl}}/auth/register 
+Content-Type: application/json
+
+{
+  "name": "Customer test",
+  "email": "customer@gmail.com",
+  "password": "Abc123@#",
+  "role": "Customer" 
+}
+###
+
+POST {{baseUrl}}/auth/authenticate
+Content-Type: application/json
+
+{
+  "email": "customer@gmail.com",
+  "password": "Abc123@#",
+  "role": "Customer" 
+}
+###

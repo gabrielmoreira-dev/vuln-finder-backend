@@ -1,0 +1,61 @@
+# @name upsertProfessional
+POST {{baseUrl}}/professionals/profile
+Content-Type: application/json
+Authorization: Bearer {{authUser.response.body.accessToken}}
+
+{
+  "summary": "summary",
+  "price": 100.00,
+  "address": {
+    "cep": "37500000",
+    "street": "BPS",
+    "number": 1,
+    "district": "Cruzeiro",
+    "city": "Itajuba",
+    "state": "MG"
+  },
+  "phone": "11999999999"
+}
+###
+
+# @name getProfessionalList
+@city = Itajuba
+GET {{baseUrl}}/professionals?city={{city}}
+Content-Type: application/json
+Authorization: Bearer {{authUser.response.body.accessToken}}
+###
+
+# @name getProfessional
+GET {{baseUrl}}/professionals/profile
+Content-Type: application/json
+Authorization: Bearer {{authUser.response.body.accessToken}}
+###
+
+# @name getProfessionalById
+@professionalId = 5fe6c350e64caff4fd4bee62
+GET {{baseUrl}}/professionals/profile/{{professionalId}}
+Content-Type: application/json
+Authorization: Bearer {{authUser.response.body.accessToken}}
+###
+
+# @name authUser
+POST  {{baseUrl}}/auth/authenticate
+Content-Type: application/json
+
+{
+    "email": "professional@gmail.com",
+    "password": "Abc123@#",
+    "role": "Professional"
+}
+###
+
+# @name authUser
+POST  {{baseUrl}}/auth/authenticate
+Content-Type: application/json
+
+{
+    "email": "customer@gmail.com",
+    "password": "Abc123@#",
+    "role": "Customer"
+}
+###
