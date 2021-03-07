@@ -1,40 +1,5 @@
 /* istanbul ignore file */
 
-const registeredUser = {
-  id: 'REGISTERED_USER_ID',
-  name: 'User',
-  email: 'user@test.com',
-  password: 'Abc123$#',
-  role: 'Customer'
-}
-
-const unregisteredUser = {
-  id: 'UNREGISTERED_USER_ID',
-  name: 'User',
-  email: 'user2@test.com',
-  password: 'Abc123$#',
-  role: 'Customer'
-}
-
-const customerList = [
-  {
-    user: registeredUser,
-    id: 'REGISTERED_CUSTOMER_ID',
-    address: {},
-    phone: '99999999'
-  }
-]
-
-const professionalList = [
-  {
-    user: registeredUser,
-    id: 'REGISTERED_PROFESSIONAL_ID',
-    address: {},
-    phone: '99999999',
-    price: 100.0
-  }
-]
-
 const makeRequest = ({ token, userId, id, role, body }) => {
   return {
     headers: {
@@ -60,24 +25,6 @@ const submitUCRequest = async ({ uc, params, errorCallback }) => {
   }
 }
 
-const submitControllerRequest = async ({ func, request, errorCallback }) => {
-  try {
-    return await func(request)
-  }
-  catch (e) {
-    errorCallback(e)
-  }
-}
-
-const submitAuthorizationRequest = async ({ func, request, errorCallback, next = () => { } }) => {
-  try {
-    return await func(request, null, next)
-  }
-  catch (e) {
-    errorCallback(e)
-  }
-}
-
 const assertTrue = value => expect(value).toBeTruthy()
 
 const assertFalse = value => expect(value).toBeFalsy()
@@ -93,14 +40,8 @@ const assertHaveBeenCalled = func => expect(func).toHaveBeenCalled()
 const assertContains = (obj, array) => expect(array).toContain(obj)
 
 module.exports = {
-  registeredUser,
-  unregisteredUser,
-  customerList,
-  professionalList,
   makeRequest,
   submitUCRequest,
-  submitControllerRequest,
-  submitAuthorizationRequest,
   assertTrue,
   assertFalse,
   assertNull,
