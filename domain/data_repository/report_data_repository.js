@@ -1,3 +1,3 @@
 module.exports = class {
-  insertReport = services => { }
+  insertReport = (userId, devices) => { }
 }
