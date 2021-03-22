@@ -4,13 +4,13 @@ const InsertReportUC = class {
   }
 
   getFuture = async params => this.reportRepository
-    .insertReport(params.userId, params.services)
+    .insertReport(params.userId, params.devices)
 }
 
 const InsertReportUCParams = class {
-  constructor({ userId, services }) {
+  constructor({ userId, devices }) {
     this.userId = userId
-    this.services = services
+    this.devices = devices
   }
 }
 

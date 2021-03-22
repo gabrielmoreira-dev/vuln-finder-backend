@@ -1,6 +1,6 @@
 const ProfessionalController = require('../../../../lib/interface/professional/professional_controller')
 const { MissingRequiredParameterError } = require('../../../../domain/errors')
-const { makeRequest, assertTrue, assertErrorType, professionalList } = require("../../../common/utils")
+const { makeRequest, assertTrue, assertErrorType } = require("../../../common/utils")
 const UseCaseSpy = require("../../../common/mock/use_case_spy")
 const ProfessionalBuilder = require("../../../common/data_builder/professional_builder")
 

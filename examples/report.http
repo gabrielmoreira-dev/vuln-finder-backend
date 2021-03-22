@@ -1,0 +1,32 @@
+# @name getReport
+POST {{baseUrl}}/report
+Content-Type: application/json
+Authorization: Bearer {{authUser.response.body.accessToken}}
+
+{
+    "devices": [
+        {
+            "description": "device",
+            "services": [
+                {
+                    "port": "3333",
+                    "vendor": "Oracle",
+                    "product": "Java",
+                    "version": "11"
+                }
+            ]
+        }
+    ]
+}
+###
+
+# @name authUser
+POST  {{baseUrl}}/auth/authenticate
+Content-Type: application/json
+
+{
+    "email": "customer@gmail.com",
+    "password": "Abc123@#",
+    "role": "Customer"
+}
+###
