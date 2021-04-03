@@ -4,15 +4,14 @@ const InsertConsultancyUC = class {
   }
 
   getFuture = async params => this.consultancyRepository
-    .insertConsultancy(params.customerId, params.professionalId, params.reportId, params.createDate)
+    .insertConsultancy(params.customerId, params.professionalId, params.reportId)
 }
 
 const InsertConsultancyUCParams = class {
-  constructor({ customerId, professionalId, reportId, createDate }) {
+  constructor({ customerId, professionalId, reportId }) {
     this.customerId = customerId
     this.professionalId = professionalId
     this.reportId = reportId
-    this.createDate = createDate
   }
 }
 

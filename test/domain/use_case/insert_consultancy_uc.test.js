@@ -8,8 +8,7 @@ describe("Insert consultancy", () => {
     const params = makeParams({
       customerId: 'CUSTOMER_ID',
       professionalId: 'PROFESSIONAL_ID',
-      reportId: 'REPORT_ID',
-      createDate: Date()
+      reportId: 'REPORT_ID'
     })
 
     const _ = await submitUCRequest({
@@ -25,5 +24,5 @@ const makeUseCase = _ => new InsertConsultancyUC({
   consultancyRepository: new ConsultancyRepositorySpy()
 })
 
-const makeParams = ({ customerId, professionalId, reportId, createDate }) =>
-  new InsertConsultancyUCParams({ customerId, professionalId, reportId, createDate })
+const makeParams = ({ customerId, professionalId, reportId }) =>
+  new InsertConsultancyUCParams({ customerId, professionalId, reportId })

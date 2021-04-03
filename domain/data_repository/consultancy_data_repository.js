@@ -1,3 +1,3 @@
 module.exports = class {
-  insertConsultancy = (customerId, professionalId, reportId, createDate) => { }
+  insertConsultancy = (customerId, professionalId, reportId) => { }
 }
