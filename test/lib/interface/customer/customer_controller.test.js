@@ -5,8 +5,8 @@ const UseCaseSpy = require("../../../common/mock/use_case_spy")
 const CustomerBuilder = require("../../../common/data_builder/customer_builder")
 
 const customerController = new CustomerController({
-  upsertCustomerUC: new UseCaseSpy(),
-  getCustomerUC: new UseCaseSpy()
+  upsertCustomerUC: new UseCaseSpy({}),
+  getCustomerUC: new UseCaseSpy({})
 })
 
 describe("Upsert customer", () => {

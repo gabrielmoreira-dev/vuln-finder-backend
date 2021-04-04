@@ -1,0 +1,21 @@
+# @name insertConsultancy
+POST {{baseUrl}}/consultancy
+Content-Type: application/json
+Authorization: Bearer {{authUser.response.body.accessToken}}
+
+{
+  "professionalId": "60443043a08bae23b119324b",
+  "reportId": "60600038b594240bbd56b26c"
+}
+###
+
+# @name authUser
+POST  {{baseUrl}}/auth/authenticate
+Content-Type: application/json
+
+{
+  "email": "customer@gmail.com",
+  "password": "Abc123@#",
+  "role": "Customer"
+}
+###
